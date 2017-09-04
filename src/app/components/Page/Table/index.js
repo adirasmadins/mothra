@@ -20,7 +20,7 @@ class Table extends Component {
                 let item = child.val();
                 item.path = child.key;
                 let newItem = {};
-                this.props.settings.elements.map((element)=>{
+                this.props.settings.properties.map((element)=>{
                     if(item[element.attribute]!=undefined)
                         newItem[element.attribute] = item[element.attribute]
 

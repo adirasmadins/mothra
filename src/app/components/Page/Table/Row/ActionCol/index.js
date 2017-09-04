@@ -12,7 +12,7 @@ class ActionCol extends Component {
             ref.child(this.props.item.path).remove().then(()=>{
                 Messages.addSuccesMsg(`Элемент "${this.props.item.name}" удален.`);
             }).then(()=>{
-                this.props.settings.elements.map((element)=>{
+                this.props.settings.properties.map((element)=>{
                     if(element.type==="fireimg")
                     {
                         if(this.props.item[element.attribute]!==""&&this.props.item[element.attribute]!==undefined)

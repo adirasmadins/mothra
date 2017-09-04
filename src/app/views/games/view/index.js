@@ -10,7 +10,7 @@ class View extends Component {
     render() {
         const settings = {
             ref:db.ref('games/'+this.props.match.params.id),
-            elements:[
+            properties:[
                 {
                     attribute:"id",
                     name:"ID"

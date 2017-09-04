@@ -573,3 +573,37 @@ div.img-delete-btn:active{
     padding-top: 80px;
     text-align: center;
 }
+.pagination{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+}
+.pagination__pages-list{
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+}
+.pagination__pages-link{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-width: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    font-size: 13px;
+    background-color: #eee;
+    margin-right: 5px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    position: relative;
+}
+.pagination__pages-link:hover{
+    background-color: #ddd;
+    border-color: #ccc;
+}
+.pagination__pages-link:active{
+    top:1px;
+}

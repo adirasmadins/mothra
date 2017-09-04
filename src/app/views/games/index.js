@@ -21,7 +21,7 @@ class Games extends Component {
     render() {
         const settings = {
             ref: db.ref('games'),
-            elements:[
+            properties:[
                 {
                     attribute:"id",
                     name:"ID"
@@ -61,6 +61,15 @@ class Games extends Component {
                             <button className="button submit-btn">Найти</button>
                             <button className="button reset-btn">Сброс</button>
                         </form>
+                    </div>
+                </div>
+                <div className="pagination">
+                    <div className="pagination__pages-list">
+                        <div className="pagination__pages-link">1</div>
+                        <div className="pagination__pages-link">2</div>
+                        <div className="pagination__pages-link">3</div>
+                        <div className="pagination__pages-link">4</div>
+                        <div className="pagination__pages-link">55</div>
                     </div>
                 </div>
                 <div className="items-list">

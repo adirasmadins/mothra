@@ -12,7 +12,7 @@ class AddForm extends Component {
             item:{},
             files:[]
         };
-        this.props.settings.elements.map((element) =>{
+        this.props.settings.properties.map((element) =>{
             state["item"][element.attribute] = "";
         })
         state.disabled=false;
@@ -38,7 +38,7 @@ class AddForm extends Component {
         var message = "Необходимо заполнить поля ";
         var requiredFields = [];
 
-        this.props.settings.elements.map((element) =>{
+        this.props.settings.properties.map((element) =>{
             if(element.required)
             {
                 if(this.state["item"][element.attribute]['value']===undefined||this.state["item"][element.attribute]['value']==='')
@@ -63,7 +63,8 @@ class AddForm extends Component {
     }
 
     render() {
-        const body = this.props.settings.elements.map((element) =>{
+        const body = this.props.settings.properties.map((element) =>{
+                console.log(element);
                 switch(element.type) {
                     case 'img':
                         return <ImageInput onChange={this.handleChange}  onFileRemove={this.onFileRemove} key={element.attribute} default={element.default}  name={element.name} settings={element}/>

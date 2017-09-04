@@ -7,7 +7,7 @@ class Add extends Component {
     render() {
         const settings = {
             path:"games",
-            elements:[
+            properties:[
                 {
                     attribute:"id",
                     name:"ID",
