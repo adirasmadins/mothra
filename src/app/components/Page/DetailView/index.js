@@ -17,7 +17,7 @@ class DetailView extends Component {
             let item = snap.val();
 
             var elementToView = {};
-            this.props.settings.elements.map((element)=>{
+            this.props.settings.properties.map((element)=>{
                 elementToView[element.attribute] = item[element.attribute];
             })
 
@@ -31,7 +31,7 @@ class DetailView extends Component {
     }
 
     render() {
-        const body = this.props.settings.elements.map((line) =>{
+        const body = this.props.settings.properties.map((line) =>{
                 return <Line key={line.attribute} settings={line} value={this.state.item[line.attribute]} />
             }
         )

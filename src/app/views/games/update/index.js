@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Page from '../../../components/Page';
 import AddForm from '../../../components/Page/AddForm';
 import {addGame} from '../../../services/games';
-import {db, storage} from '../../../config/constants'
+import {db, storage} from '../../../config/constants';
+import Loader from '../../../components/Page/Loader';
 
 class Add extends Component {
     constructor(props) {
         super(props);
+        /*
         this.state ={
             item: {
                 id:"",
@@ -14,7 +16,7 @@ class Add extends Component {
                 createdAt:"",
                 icon:""
             }
-        };
+        };*/
     }
 
     componentWillMount () {
@@ -32,44 +34,38 @@ class Add extends Component {
                         icon:url
                     }
                 });
+                Loader.enablePage();
             })
         });
+
     }
 
     render() {
         const settings = {
-            submitHandler:addGame,
-            elements:[
+            path:"games",
+            properties:[
                 {
                     attribute:"id",
                     name:"ID",
-                    required:true,
-                    default:this.state.item.id
+                    required:true
                 },
                 {
                     attribute:"name",
                     name:"Название игры",
-                    required:true,
-                    default:this.state.item.name
+                    required:true
                 },
                 {
                     attribute:"icon",
                     name:"Иконка",
                     type:"img",
                     required:true,
-                    default:this.state.item.icon
-                }
-                ,
-                {
-                    attribute:"icontest",
-                    name:"Иконкаtrst",
-                    type:"img"
+                    path:"games"
                 }
             ]
         }
 
         return (
-            <Page loader={false} title="Добавить новую игру" location="games" addBtn="false">
+            <Page title="Добавить новую игру" location="games" addBtn="false">
                 <AddForm settings={settings} />
             </Page>
         );

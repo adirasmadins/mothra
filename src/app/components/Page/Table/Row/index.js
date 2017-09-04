@@ -5,7 +5,7 @@ import ActionCol from './ActionCol';
 import FireImgCol from './FireImgCol';
 class Row extends Component {
     render() {
-        const row = this.props.settings.elements.map((row) =>{
+        const row = this.props.settings.properties.map((row) =>{
                 switch(row.type) {
                     case 'action':
                         return <ActionCol key={row.attribute} settings={this.props.settings} location={row.location} item={this.props.item}/>
