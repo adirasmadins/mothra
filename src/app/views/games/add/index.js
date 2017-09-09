@@ -11,12 +11,14 @@ class Add extends Component {
                 {
                     attribute:"id",
                     name:"ID",
-                    required:true
+                    required:true,
+                    type:"string"
                 },
                 {
                     attribute:"name",
                     name:"Название игры",
-                    required:true
+                    required:true,
+                    type:"string"
                 },
                 {
                     attribute:"icon",

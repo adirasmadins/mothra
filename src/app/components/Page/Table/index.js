@@ -29,7 +29,7 @@ class Table extends Component {
                 newState.push(newItem);
 
             }.bind(this));
-            console.log(newState);
+
             this.setState({
                 items: newState
             });

@@ -3,6 +3,7 @@ import ImageInput from './ImageInput';
 import TextInput from './TextInput';
 import SubmitBtn from '../SubmitBtn';
 import Messages from '../../Messages';
+import Loader from '../Loader';
 import {addToFB} from '../../../services/fireform';
 class AddForm extends Component {
 
@@ -12,11 +13,28 @@ class AddForm extends Component {
             item:{},
             files:[]
         };
+        
         this.props.settings.properties.map((element) =>{
-            state["item"][element.attribute] = "";
+            if(element.default===undefined) {
+                state["item"][element.attribute] = "";                
+            }
+            else {
+                state["item"][element.attribute] = {
+                    name:element.name,
+                    type:element.type,
+                    value:element.default,
+                    settings:element
+                }
+            }
         })
         state.disabled=false;
         this.state = state;
+        console.log(this.props.settings);
+    }
+
+    componentDidMount() {
+        if(this.props.ref!==undefined)
+            Loader.disablePage();
     }
 
     //Form submit handler
@@ -64,7 +82,6 @@ class AddForm extends Component {
 
     render() {
         const body = this.props.settings.properties.map((element) =>{
-                console.log(element);
                 switch(element.type) {
                     case 'img':
                         return <ImageInput onChange={this.handleChange}  onFileRemove={this.onFileRemove} key={element.attribute} default={element.default}  name={element.name} settings={element}/>

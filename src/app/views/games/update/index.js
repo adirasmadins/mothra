@@ -43,16 +43,21 @@ class Add extends Component {
     render() {
         const settings = {
             path:"games",
+            ref:"games/"+this.props.match.params.id,
             properties:[
                 {
                     attribute:"id",
                     name:"ID",
-                    required:true
+                    default:"defaultId",
+                    required:true,
+                    type:"string"
                 },
                 {
                     attribute:"name",
                     name:"Название игры",
-                    required:true
+                    default:"defaultName",
+                    required:true,
+                    type:"string"
                 },
                 {
                     attribute:"icon",

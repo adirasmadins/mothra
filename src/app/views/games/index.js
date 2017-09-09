@@ -24,11 +24,13 @@ class Games extends Component {
             properties:[
                 {
                     attribute:"id",
-                    name:"ID"
+                    name:"ID",
+                    type:"string"
                 },
                 {
                     attribute:"name",
-                    name:"Название игры"
+                    name:"Название игры",
+                    type:"string"
                 },
                 {
                     attribute:"createdAt",
