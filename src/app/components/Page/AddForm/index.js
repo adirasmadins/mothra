@@ -10,10 +10,9 @@ class AddForm extends Component {
     constructor(props) {
         super(props);
         var state = {
-            item:{},
-            files:[]
+            item:{}
         };
-        
+
         this.props.settings.properties.map((element) =>{
             if(element.default===undefined) {
                 state["item"][element.attribute] = "";                
