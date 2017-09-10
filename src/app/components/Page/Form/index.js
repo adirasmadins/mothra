@@ -5,7 +5,7 @@ import SubmitBtn from '../SubmitBtn';
 import Messages from '../../Messages';
 import Loader from '../Loader';
 import {addToFB} from '../../../services/fireform';
-class AddForm extends Component {
+class Form extends Component {
 
     constructor(props) {
         super(props);
@@ -14,14 +14,14 @@ class AddForm extends Component {
         };
 
         this.props.settings.properties.map((element) =>{
-            if(element.default===undefined) {
+            if(element.value===undefined) {
                 state["item"][element.attribute] = "";                
             }
             else {
                 state["item"][element.attribute] = {
                     name:element.name,
                     type:element.type,
-                    value:element.default,
+                    value:element.value,
                     settings:element
                 }
             }
@@ -43,7 +43,7 @@ class AddForm extends Component {
         {
             this.setState({disabled: true});
             //Add game to FireBase DateBase
-            addToFB(this.state.item, this.props.settings.path).then(()=>{
+            addToFB(this.state.item, this.props.settings.ref,this.props.settings.action).then(()=>{
                 this.setState({disabled: false});
             })
         }
@@ -104,4 +104,4 @@ class AddForm extends Component {
     }
 }
 
-export default AddForm;
+export default Form;

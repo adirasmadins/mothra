@@ -14,7 +14,7 @@ function uniqueID(){
 }
 
 //Add item to Firebase datebase and storage
-export function addToFB (item,rootPath) {
+export function addToFB (item,rootPath,action) {
     console.log(item);
     //Generate random name for image that will be inserted
     var randomName = uniqueID();
@@ -50,21 +50,29 @@ export function addToFB (item,rootPath) {
         If theris no such Id then insert new item.
         After item inserted, add images to storage.
     */
-    var newItemRef = ref.child(`${rootPath}`).push();
-    return newItemRef.transaction(function(currentItem) {
+    if(action===undefined||action==='create')
+        var itemRef = ref.child(`${rootPath}`).push();
+    else
+        var itemRef = ref.child(`${rootPath}`);
+    return itemRef.transaction(function(currentItem) {
         //Check if game already exists
         if (currentItem === null) {
             itemSaved = true;
             return insertItem;
         }
         else {
-            Messages.addErrorMsg(`Игра c Id "${id}" уже существует.`);
+            if (action===undefined||action==='create') {
+                Messages.addErrorMsg(`Игра c Id "${id}" уже существует.`);
+            } else {
+                itemSaved = true;
+                return insertItem;                
+            }
+
         }
     }, function(error, committed, snapshot) {
         if (error) {
             itemSaved = false;
-        }
-        else if(!committed){
+        } else if (!committed) {
             itemSaved = false;
         }
     }).then((e)=>{

@@ -1,49 +1,68 @@
 import React, { Component } from 'react';
 import Page from '../../components/Page';
-import usersdb from '../../db/usersdb-test';
+import Table from '../../components/Page/Table';
+import {db} from '../../config/constants'
+
 class Users extends Component {
-  render() {
-    const info = usersdb;
-    const tablfeInfo = info.map((item) =>
-       <tr key={item._id}>
-           <td>{item._id}</td>
-           <td>Аватар</td>
-           <td>{item.name}</td>
-           <td>{item.email}</td>
-           <td>{item.date}</td>
-       </tr>
-    );
-    return (
-        <Page title="Пользователи" location="users">
-            <div className="filter-cnt">
-                <p>Фильтр</p>
-                <div className="filter-inner">
-                    <form action="">
-                        <input type="text" placeholder="Id"/>
-                        <input type="text" placeholder="Имя"/>
-                        <input type="text" placeholder="Email"/>
-                        <button className="button submit-btn">Найти</button>
-                        <button className="button reset-btn">Сброс</button>
-                    </form>
+    constructor(){
+        super();
+        this.state = {
+            pageDisabled:true
+        }
+
+    }
+
+    onLoadHandler = () => {
+        this.setState({
+            pageDisabled: false
+        });
+    }
+
+    render() {
+        const settings = {
+            ref: db.ref('users'),
+            properties:[
+                {
+                    attribute:"access",
+                    name:"Доступ",
+                    type:"string"
+                },                
+                {
+                    attribute:"table_action",
+                    name:"",
+                    type:"action",
+                    location:"users"
+                }
+            ]
+        }
+
+        return (
+            <Page title="Игры" location="games">
+                <div className="filter-cnt">
+                    <p>Фильтр</p>
+                    <div className="filter-inner">
+                        <form action="">
+                            <input type="text" placeholder="Название игры"/>
+                            <button className="button submit-btn">Найти</button>
+                            <button className="button reset-btn">Сброс</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div className="items-list">
-                <table>
-                    <tbody>
-                   <tr>
-                       <th>Id</th>
-                       <th>Аватар</th>
-                       <th>Никнейм</th>
-                       <th>Email</th>
-                       <th>Последняя авторизация</th>
-                   </tr>
-                   {tablfeInfo}
-                   </tbody>
-               </table>
-            </div>
-        </Page>
-    );
-  }
+                <div className="pagination">
+                    <div className="pagination__pages-list">
+                        <div className="pagination__pages-link">1</div>
+                        <div className="pagination__pages-link">2</div>
+                        <div className="pagination__pages-link">3</div>
+                        <div className="pagination__pages-link">4</div>
+                        <div className="pagination__pages-link">55</div>
+                    </div>
+                </div>
+                <div className="items-list">
+                    <Table onPageLoad={this.onLoadHandler} settings={settings}/>
+                </div>
+            </Page>
+        );
+    }
 }
 
 export default Users;

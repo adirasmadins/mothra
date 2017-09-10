@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Page from '../../../components/Page';
-import AddForm from '../../../components/Page/AddForm';
-import {addGame} from '../../../services/games';
+import Form from '../../../components/Page/Form';
 import {db, storage} from '../../../config/constants';
 import Loader from '../../../components/Page/Loader';
 
@@ -42,20 +41,20 @@ class Add extends Component {
 
     render() {
         const settings = {
-            path:"games",
             ref:"games/"+this.props.match.params.id,
+            action:"update",
             properties:[
                 {
                     attribute:"id",
                     name:"ID",
-                    default:"defaultId",
+                    value:"defaultId",
                     required:true,
                     type:"string"
                 },
                 {
                     attribute:"name",
                     name:"Название игры",
-                    default:"defaultName",
+                    value:"defaultName",
                     required:true,
                     type:"string"
                 },
@@ -71,7 +70,7 @@ class Add extends Component {
 
         return (
             <Page title="Добавить новую игру" location="games" addBtn="false">
-                <AddForm settings={settings} />
+                <Form settings={settings} />
             </Page>
         );
     }
