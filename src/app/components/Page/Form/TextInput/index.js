@@ -3,8 +3,8 @@ class TextInput extends Component {
     constructor(props) {
         super(props);
         let value = '';
-        if(props.settings.default!==undefined)
-            value = props.settings.default;
+        if(props.settings.value!==undefined)
+            value = props.settings.value;
         this.state = {
             value:value
         };

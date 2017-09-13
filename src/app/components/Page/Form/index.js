@@ -5,6 +5,8 @@ import SubmitBtn from '../SubmitBtn';
 import Messages from '../../Messages';
 import Loader from '../Loader';
 import {addToFB} from '../../../services/fireform';
+import {db, storage} from '../../../config/constants';
+
 class Form extends Component {
 
     constructor(props) {
@@ -31,9 +33,41 @@ class Form extends Component {
         console.log(this.props.settings);
     }
 
+    componentWillMount() {
+       /* if(this.props.settings.action=='update')
+        {
+            db.ref(this.props.settings.ref)
+            .once("value",(snap)=>{
+                let item = snap.val();
+                item.key = snap.key;
+
+                console.log(item);            
+
+        this.props.settings.properties.map((element) =>{
+            if (item[element.attribute] !== undefined) {
+                if
+            }
+        })
+
+                storage.ref(item.icon).getDownloadURL().then((url) => {
+                    // this.setState({
+                    //     item: {
+                    //         id:item.id,
+                    //         name:item.name,
+                    //         createdAt:item.createdAt,
+                    //         icon:url
+                    //     }
+                    // });
+                    Loader.enablePage();
+                })
+            });
+        }*/
+        
+    }
+
     componentDidMount() {
-        if(this.props.ref!==undefined)
-            Loader.disablePage();
+        // if(this.props.settings.ref!==undefined)
+        //     Loader.disablePage();
     }
 
     //Form submit handler
