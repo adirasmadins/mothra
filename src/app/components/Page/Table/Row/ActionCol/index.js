@@ -24,10 +24,10 @@ class ActionCol extends Component {
         }
     }
     render() {
-        return <td>
-                    <Link to={this.props.location + "/view/"+this.props.item.path} className="action-btn"><i className="fa fa-eye"></i></Link>
-                    &nbsp;<Link to={this.props.location + "/update/"+this.props.item.path} className="action-btn"><i className="fa fa-pencil"></i></Link>
-                    &nbsp;<a onClick={this.removeItem} className="action-btn"><i className="fa fa-trash-o"></i></a>
+        return <td className="align-middle">
+                    <Link to={this.props.location + "/view/"+this.props.item.path} className="btn btn-outline-primary btn-sm"><i className="fa fa-eye"></i></Link>
+                    &nbsp;<Link to={this.props.location + "/update/"+this.props.item.path} className="btn btn-outline-primary btn-sm"><i className="fa fa-pencil"></i></Link>
+                    &nbsp;<button onClick={this.removeItem} className="btn btn-outline-danger btn-sm"><i className="fa fa-trash-o"></i></button>
                 </td>
     }
 }

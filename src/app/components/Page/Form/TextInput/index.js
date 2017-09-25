@@ -34,7 +34,11 @@ class TextInput extends Component {
     }
 
     render() {
-        return <input onChange={this.onChangeHandler} value={this.state.value} className="input" name={this.props.settings.attribute} type="text" placeholder={this.props.settings.name} />
+        return <div className="form-group">
+                    <label>{this.props.settings.name}</label>
+                    <input onChange={this.onChangeHandler} value={this.state.value} className="form-control" name={this.props.settings.attribute} type="text" placeholder={this.props.settings.name} />
+                </div>
+            
     }
 }
 

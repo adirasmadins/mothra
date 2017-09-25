@@ -7,9 +7,11 @@ class Header extends Component {
         )
 
         return (
-            <tr>
-                {header}
-            </tr>
+            <thead>
+                <tr>
+                    {header}
+                </tr>
+            </thead>
         );
     }
 }

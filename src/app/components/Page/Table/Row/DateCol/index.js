@@ -8,7 +8,7 @@ class DateCol extends Component {
     }
     render() {
         const date = this.getHumanDate();
-        return <td>{date}</td>
+        return <td className="align-middle">{date}</td>
     }
 }
 

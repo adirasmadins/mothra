@@ -48,9 +48,9 @@ class Table extends Component {
             }
         )
         return (
-            <table>
+            <table className="table">               
+                <Header settings={this.props.settings}/>
                 <tbody>
-                    <Header settings={this.props.settings}/>
                     {tablfeInfo}
                 </tbody>
             </table>

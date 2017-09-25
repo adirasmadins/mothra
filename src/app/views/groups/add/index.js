@@ -32,7 +32,9 @@ class Add extends Component {
         }
 
         return (
-            <Page loader={false}  title="Добавить новую игру" location="games" addBtn="false">
+            <Page loader={false} location="games">
+                <h1 className="display-3">New group</h1>
+                <p className="lead text-muted">Add new group</p>            
                 <Form settings={settings} />
             </Page>
         );

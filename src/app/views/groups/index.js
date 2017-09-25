@@ -1,49 +1,68 @@
 import React, { Component } from 'react';
 import Page from '../../components/Page';
-import usersdb from '../../db/usersdb-test';
-class Users extends Component {
-  render() {
-    const info = usersdb;
-    const tablfeInfo = info.map((item) =>
-       <tr key={item._id}>
-           <td>{item._id}</td>
-           <td>Аватар</td>
-           <td>{item.name}</td>
-           <td>{item.email}</td>
-           <td>{item.date}</td>
-       </tr>
-    );
-    return (
-        <Page title="Пользователи" location="users">
-            <div className="filter-cnt">
-                <p>Фильтр</p>
-                <div className="filter-inner">
-                    <form action="">
-                        <input type="text" placeholder="Id"/>
-                        <input type="text" placeholder="Имя"/>
-                        <input type="text" placeholder="Email"/>
-                        <button className="button submit-btn">Найти</button>
-                        <button className="button reset-btn">Сброс</button>
-                    </form>
-                </div>
-            </div>
-            <div className="items-list">
-                <table>
-                    <tbody>
-                   <tr>
-                       <th>Id</th>
-                       <th>Аватар</th>
-                       <th>Никнейм</th>
-                       <th>Email</th>
-                       <th>Последняя авторизация</th>
-                   </tr>
-                   {tablfeInfo}
-                   </tbody>
-               </table>
-            </div>
-        </Page>
-    );
-  }
+import Table from '../../components/Page/Table';
+import {db} from '../../config/constants';
+import {Link} from 'react-router-dom';
+
+class Groups extends Component {
+    constructor(){
+        super();
+        this.state = {
+            pageDisabled:true
+        }
+
+    }
+
+    onLoadHandler = () => {
+        this.setState({
+            pageDisabled: false
+        });
+    }
+
+    render() {
+        const settings = {
+            ref: db.ref('games'),
+            properties:[
+                {
+                    attribute:"id",
+                    name:"ID",
+                    type:"string"
+                },
+                {
+                    attribute:"name",
+                    name:"Название игры",
+                    type:"string"
+                },
+                {
+                    attribute:"createdAt",
+                    name:"Время создания",
+                    type:"date"
+                },
+                {
+                    attribute:"icon",
+                    name:"Иконка",
+                    type:"fireimg"
+                },
+                {
+                    attribute:"table_action",
+                    name:"",
+                    type:"action",
+                    location:"groups"
+                }
+            ]
+        }
+
+
+
+        return (
+            <Page>
+                <h1 className="display-3">Groups</h1>
+                <p className="lead text-muted">Groups list</p>
+                <Link to={"/groups/add"} className="btn btn-primary mb-4">Add group</Link>
+                <Table onPageLoad={this.onLoadHandler} settings={settings}/>
+            </Page>
+        );
+    }
 }
 
-export default Users;
+export default Groups;

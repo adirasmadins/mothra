@@ -19,8 +19,8 @@ class FireImgCol extends Component {
     }
 
     render() {
-        var img = <img src={this.state.img} alt=""/>
-        return <td>{img}</td>
+        var img = <img className="img-thumbnail" src={this.state.img} alt=""/>
+        return <td className="align-middle text-center td_image">{img}</td>
     }
 }
 

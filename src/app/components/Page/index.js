@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Title from './Title';
 import Loader from './Loader';
 
 /**
@@ -11,12 +10,16 @@ import Loader from './Loader';
 
 class Page extends Component {
     render() {
-        return <div className="main-cnt">
-            <Loader loader={this.props.loader} />
-            <Title addBtn={this.props.addBtn} title={this.props.title} location={this.props.location}/>
-            {this.props.children}
-        </div>;
+        return (
+        <div className="page">
+        	<div className="container-fluid py-3 px-5">
+	            <Loader loader={this.props.loader} />
+	            {this.props.children}
+            </div>
+        </div>);
     }
 }
 
 export default Page;
+
+				
