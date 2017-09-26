@@ -62,10 +62,8 @@ class ImageInput extends Component {
 
     render() {
         let bremoveBtn = null;
-        let className = "d-flex align-items-center";
         if(this.state.file){
             bremoveBtn = <div><button className="btn btn-outline-danger btn-sm ml-3" onClick={this.removeImg} ><i className="fa fa-trash-o"></i></button></div>
-            className = "d-flex align-items-center mt-3"
         }
         return (
             <div className="drop-zone">
@@ -73,7 +71,7 @@ class ImageInput extends Component {
                 <Dropzone activeClassName="drop-zone__input_active" className="drop-zone__input" onDrop={this.onDrop.bind(this)}>
                     <p>Upload</p>
                 </Dropzone>
-                <div className={className}>
+                <div className={"d-flex align-items-center " + (this.state.file?'mt-3':'')}>
                     <div id={"img-cnt_"+this.props.settings.attribute}>
                     </div>
                     {bremoveBtn}
