@@ -5,7 +5,7 @@ class Messages extends Component {
     static addSuccesMsg(msg){
         var msgBox = document.querySelector('.msg-main');
         var div = document.createElement('div');
-        div.className = "message message_success";
+        div.className = "message alert alert-success";
         div.onclick = function() {
             this.className += " fadeOut";
             setTimeout(()=>{this.remove()},200);
@@ -18,7 +18,7 @@ class Messages extends Component {
     static addErrorMsg(msg){
         var msgBox = document.querySelector('.msg-main');
         var div = document.createElement('div');
-        div.className = "message message_error";
+        div.className = "message alert alert-danger";
         div.onclick = function() {
             this.className += " fadeOut";
             setTimeout(()=>{this.remove()},200);

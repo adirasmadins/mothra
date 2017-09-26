@@ -31,7 +31,8 @@ class ImageInput extends Component {
             var preview = document.getElementById("img-cnt_"+this.props.settings.attribute);
             preview.innerHTML = "";
             var img = document.createElement("img");
-            img.classList.add("obj");
+            img.classList.add("img-thumbnail");
+            img.classList.add("img-thumbnail-upload");
             img.file = file;
             preview.appendChild(img); // Assuming that "preview" is the div output where the content will be displayed.
 
@@ -61,17 +62,22 @@ class ImageInput extends Component {
 
     render() {
         let bremoveBtn = null;
+        let className = "d-flex align-items-center";
         if(this.state.file){
-            bremoveBtn = <div className="img-delete-btn" onClick={this.removeImg} >удалить</div>
+            bremoveBtn = <div><button className="btn btn-outline-danger btn-sm ml-3" onClick={this.removeImg} ><i className="fa fa-trash-o"></i></button></div>
+            className = "d-flex align-items-center mt-3"
         }
         return (
             <div className="drop-zone">
-                <Dropzone onDrop={this.onDrop.bind(this)}>
-                    <p>{this.props.name}</p>
+                <label>{this.props.name}</label>
+                <Dropzone activeClassName="drop-zone__input_active" className="drop-zone__input" onDrop={this.onDrop.bind(this)}>
+                    <p>Upload</p>
                 </Dropzone>
-                <div className="img-cnt" id={"img-cnt_"+this.props.settings.attribute}>
+                <div className={className}>
+                    <div id={"img-cnt_"+this.props.settings.attribute}>
+                    </div>
+                    {bremoveBtn}
                 </div>
-                {bremoveBtn}
             </div>
         )
     }

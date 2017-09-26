@@ -27,7 +27,13 @@ class Add extends Component {
                     type:"img",
                     required:true,
                     path:"games"
-                }
+                },
+                {
+                    attribute:"name2",
+                    name:"Название игры",
+                    required:true,
+                    type:"string"
+                }                
             ]
         }
 

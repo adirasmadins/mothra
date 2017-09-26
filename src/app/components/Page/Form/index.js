@@ -130,7 +130,9 @@ class Form extends Component {
         return (
             <div className="form-cnt">
                 <form action="" onSubmit={this.handleSubmit}>
-                    {body}
+                    <div className="mb-5">
+                        {body}
+                    </div>
                     <SubmitBtn disabled={this.state.disabled}/>
                 </form>
             </div>

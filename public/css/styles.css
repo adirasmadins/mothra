@@ -204,3 +204,46 @@
 .td_image{
     width: 100px;
 }
+.msg-main{
+    position: fixed;
+    right: 0;
+    padding: 15px;
+    overflow: hidden;
+}
+.message{
+    animation-duration: .6s;
+    cursor: pointer;
+}
+.btn{
+    cursor: pointer;
+}
+.drop-zone{
+    margin-bottom: 1rem;
+}
+.drop-zone__input{
+
+}
+.drop-zone__input{
+    display: block;
+    width: 100%;
+    height: 38px;
+    font-size: 1rem;
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;    
+    color: #aaa;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 2px dashed rgba(0,0,0,.15);
+    border-radius: .25rem;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    cursor: pointer;
+}
+.drop-zone__input_active{
+    border: 2px dashed #28a745;
+}
+.img-thumbnail-upload{
+    max-height: 100px;
+    max-width: 100px;
+}

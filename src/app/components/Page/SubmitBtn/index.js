@@ -3,7 +3,7 @@ class SubmitBtn extends Component {
     render() {
         const disabled = this.props.disabled||false;
         return (
-            disabled?<button className="button submit-btn" disabled>Сохранение...</button>:<button className="button submit-btn">Сохранить</button>
+            disabled?<button className="btn btn-primary" disabled>Сохранение...</button>:<button className="btn btn-primary">Сохранить</button>
         );
     }
 }
