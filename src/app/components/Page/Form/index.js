@@ -14,54 +14,59 @@ class Form extends Component {
         var state = {
             item:{}
         };
-
+        /* Array/Object issue */
         this.props.settings.properties.map((element) =>{
-            if(element.value===undefined) {
-                state["item"][element.attribute] = "";                
-            }
-            else {
-                state["item"][element.attribute] = {
-                    name:element.name,
-                    type:element.type,
-                    value:element.value,
-                    settings:element
-                }
+            state["item"][element.attribute] = {
+                attribute:element.attribute,
+                name:element.name,
+                type:element.type,
+                value:element.value,
+                settings:element
             }
         })
         state.disabled=false;
         this.state = state;
-        console.log(this.props.settings);
     }
 
     componentWillMount() {
-       /* if(this.props.settings.action=='update')
+        if(this.props.settings.action=='update')
         {
             db.ref(this.props.settings.ref)
             .once("value",(snap)=>{
                 let item = snap.val();
-                item.key = snap.key;
+                item.key = snap.key;      
 
-                console.log(item);            
-
-        this.props.settings.properties.map((element) =>{
-            if (item[element.attribute] !== undefined) {
-                if
-            }
-        })
-
-                storage.ref(item.icon).getDownloadURL().then((url) => {
-                    // this.setState({
-                    //     item: {
-                    //         id:item.id,
-                    //         name:item.name,
-                    //         createdAt:item.createdAt,
-                    //         icon:url
-                    //     }
-                    // });
-                    Loader.enablePage();
+                let stateItem = {};
+                this.props.settings.properties.map((element) =>{
+                    if (item[element.attribute] !== undefined) {
+                        stateItem[element.attribute] = {
+                            attribute:element.attribute,
+                            name:element.name,
+                            type:element.type,
+                            value:item[element.attribute],
+                            settings:element
+                        }
+                        if(item[element.attribute].file !== undefined)
+                            stateItem[element.attribute].file = item[element.attribute].file;
+                    }
                 })
+
+                this.setState({'item':stateItem});
+
+                // storage.ref(item.icon).getDownloadURL().then((url) => {
+                //     // this.setState({
+                //     //     item: {
+                //     //         id:item.id,
+                //     //         name:item.name,
+                //     //         createdAt:item.createdAt,
+                //     //         icon:url
+                //     //     }
+                //     // });
+                //     Loader.enablePage();
+                // })
+                Loader.enablePage();
             });
-        }*/
+        }
         
     }
 
@@ -106,23 +111,25 @@ class Form extends Component {
 
     //Input change handler
     handleChange = (data) => {
+        console.log(data);
         var item = this.state.item;
-        item[data.name] = data;
+        item[data.attribute] = data;
         this.setState({
             item: item
         });
     }
 
     render() {
+
         const body = this.props.settings.properties.map((element) =>{
                 switch(element.type) {
                     case 'img':
-                        return <ImageInput onChange={this.handleChange}  onFileRemove={this.onFileRemove} key={element.attribute} default={element.default}  name={element.name} settings={element}/>
+                        return <ImageInput onChange={this.handleChange}  onFileRemove={this.onFileRemove} key={element.attribute} element={this.state.item[element.attribute]}/>
                         break;
                     case 'string':
-                        return <TextInput onChange={this.handleChange} key={element.attribute} settings={element}/>
+                        return <TextInput onChange={this.handleChange} key={element.attribute} element={this.state.item[element.attribute]}/>
                     default:
-                        return <TextInput onChange={this.handleChange} key={element.attribute} settings={element}/>
+                        return <TextInput onChange={this.handleChange} key={element.attribute} element={this.state.item[element.attribute]}/>
                 }
             }
         )

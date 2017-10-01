@@ -22,13 +22,15 @@ class ImageInput extends Component {
 
             this.props.onChange({
                 type:'img',
-                value:file,
-                name:this.props.settings.attribute,
-                settings:this.props.settings
+                value:file.src,
+                file:file,
+                name:this.props.element.name,
+                attribute:this.props.element.attribute,
+                settings:this.props.element.settings
             });
 
             console.log(file.name.substr(-4));
-            var preview = document.getElementById("img-cnt_"+this.props.settings.attribute);
+            var preview = document.getElementById("img-cnt_"+this.props.element.settings.attribute);
             preview.innerHTML = "";
             var img = document.createElement("img");
             img.classList.add("img-thumbnail");
@@ -49,14 +51,14 @@ class ImageInput extends Component {
     }
 
     removeImg = () => {
-        this.props.onChange({
-            name:this.props.settings.attribute,
-        });
+        this.props.onChange(
+            this.props.element
+        );
 
         this.setState({
             file:''
         });
-        var preview = document.getElementById("img-cnt_"+this.props.settings.attribute);
+        var preview = document.getElementById("img-cnt_"+this.props.element.attribute);
         preview.innerHTML = "";
     }
 
@@ -65,14 +67,20 @@ class ImageInput extends Component {
         if(this.state.file){
             bremoveBtn = <div><button className="btn btn-outline-danger btn-sm ml-3" onClick={this.removeImg} ><i className="fa fa-trash-o"></i></button></div>
         }
+        let img = null;
+        if(this.props.element.value!==undefined)
+        {
+            img = <img src={this.props.element.value} className="img-thumbnail img-thumbnail-upload"/>
+        }
         return (
             <div className="drop-zone">
-                <label>{this.props.name}</label>
+                <label>{this.props.element.name}</label>
                 <Dropzone activeClassName="drop-zone__input_active" className="drop-zone__input" onDrop={this.onDrop.bind(this)}>
                     <p>Upload</p>
                 </Dropzone>
                 <div className={"d-flex align-items-center " + (this.state.file?'mt-3':'')}>
-                    <div id={"img-cnt_"+this.props.settings.attribute}>
+                    <div id={"img-cnt_"+this.props.element.attribute}>
+                        {img}
                     </div>
                     {bremoveBtn}
                 </div>

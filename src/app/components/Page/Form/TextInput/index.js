@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 class TextInput extends Component {
     constructor(props) {
         super(props);
-        let value = '';
-        if(props.settings.value!==undefined)
-            value = props.settings.value;
         this.state = {
-            value:value
+            value:''
         };
     }
 
@@ -26,17 +23,18 @@ class TextInput extends Component {
 
         this.props.onChange({
             type:'string',
-            name:this.props.settings.attribute,
+            name:this.props.element.name,
+            attribute:this.props.element.attribute,
             value:value,
-            settings:this.props.settings
+            settings:this.props.element.settings
         });
 
     }
 
     render() {
         return <div className="form-group">
-                    <label>{this.props.settings.name}</label>
-                    <input onChange={this.onChangeHandler} value={this.state.value} className="form-control" name={this.props.settings.attribute} type="text" placeholder={this.props.settings.name} />
+                    <label>{this.props.element.name}</label>
+                    <input onChange={this.onChangeHandler} value={this.props.element.value} className="form-control" name={this.props.element.attribute} type="text" placeholder={this.props.element.name} />
                 </div>
             
     }

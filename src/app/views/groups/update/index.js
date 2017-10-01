@@ -19,23 +19,23 @@ class Add extends Component {
     }
 
     componentWillMount () {
-        const id = this.props.match.params.id;
-        db.ref('games/'+id)
-        .once("value",(snap)=>{
-            let item = snap.val();
-            item.id = snap.key;
-            storage.ref(item.icon).getDownloadURL().then((url) => {
-                this.setState({
-                    item: {
-                        id:item.id,
-                        name:item.name,
-                        createdAt:item.createdAt,
-                        icon:url
-                    }
-                });
-                Loader.enablePage();
-            })
-        });
+        // const id = this.props.match.params.id;
+        // db.ref('games/'+id)
+        // .once("value",(snap)=>{
+        //     let item = snap.val();
+        //     item.id = snap.key;
+        //     storage.ref(item.icon).getDownloadURL().then((url) => {
+        //         this.setState({
+        //             item: {
+        //                 id:item.id,
+        //                 name:item.name,
+        //                 createdAt:item.createdAt,
+        //                 icon:url
+        //             }
+        //         });
+        //         Loader.enablePage();
+        //     })
+        // });
 
     }
 
@@ -47,29 +47,29 @@ class Add extends Component {
                 {
                     attribute:"id",
                     name:"ID",
-                    value:"defaultId",
                     required:true,
                     type:"string"
                 },
                 {
                     attribute:"name",
                     name:"Название игры",
-                    value:"defaultName",
                     required:true,
                     type:"string"
                 },
                 {
                     attribute:"icon",
                     name:"Иконка",
-                    type:"img",
                     required:true,
+                    type:"img",                    
                     path:"games"
                 }
             ]
         }
 
         return (
-            <Page title="Добавить новую игру" location="games" addBtn="false">
+            <Page>
+                <h1 className="display-3">Update group</h1>
+                <p className="lead text-muted">Update group "{this.props.match.params.id}"</p>              
                 <Form settings={settings} />
             </Page>
         );

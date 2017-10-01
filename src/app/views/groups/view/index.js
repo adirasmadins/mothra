@@ -3,7 +3,8 @@ import Page from '../../../components/Page';
 import DetailView from '../../../components/Page/DetailView';
 import { addGame } from '../../../services/games';
 import Messages from '../../../components/Messages';
-import {db} from '../../../config/constants'
+import {db} from '../../../config/constants';
+import {Link} from 'react-router-dom';
 import moment from 'moment';
 
 class View extends Component {
@@ -33,6 +34,9 @@ class View extends Component {
         }
         return (
             <Page title={"Игра " + this.props.match.params.id} location="games" addBtn="false">
+                <h1 className="display-3">{"Game " + this.props.match.params.id}</h1>
+                <p className="lead text-muted">View {"game " + this.props.match.params.id}</p>     
+                <Link to={"/groups/update/" + this.props.match.params.id} className="btn btn-primary mb-4">Update</Link>       
                 <DetailView settings={settings} />
             </Page>
         );

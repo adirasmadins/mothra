@@ -20,7 +20,7 @@ class FireImgLine extends Component {
     }
 
     render() {
-        const img = <img src={this.state.img} alt=""/>
+        const img = <img className="img-thumbnail img-thumbnail-detail" src={this.state.img} alt=""/>
         return <div>{img}</div>
     }
 }

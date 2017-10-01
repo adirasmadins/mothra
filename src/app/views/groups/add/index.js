@@ -23,17 +23,11 @@ class Add extends Component {
                 },
                 {
                     attribute:"icon",
-                    name:"Иконка",
+                    name:"Иконка",                   
+                    required:true,
                     type:"img",
-                    required:true,
                     path:"games"
-                },
-                {
-                    attribute:"name2",
-                    name:"Название игры",
-                    required:true,
-                    type:"string"
-                }                
+                }             
             ]
         }
 

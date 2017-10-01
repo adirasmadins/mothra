@@ -37,9 +37,11 @@ class DetailView extends Component {
         )
 
         return (
-            <div className="view-cnt">
-                {body}
-            </div>
+            <table className="table">               
+                <tbody>
+                    {body}
+                </tbody>
+            </table>            
         );
     }
 }

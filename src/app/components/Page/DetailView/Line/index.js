@@ -19,10 +19,10 @@ class Line extends Component {
                         var value = <StringLine value={this.props.value} />
                 }
 
-        return <div className="view-cnt__line">
-                    <div className="view-cnt__name">{this.props.settings.name}</div>
-                    <div className="view-cnt__value">{value}</div>
-                </div>
+        return <tr>
+                    <td className="align-middle">{this.props.settings.name}</td>
+                    <td className="align-middle">{value}</td>
+                </tr>
     }
 }
 
