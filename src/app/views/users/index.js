@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Page from '../../components/Page';
 import Table from '../../components/Page/Table';
-import {db} from '../../config/constants'
+import {db} from '../../config/firebase';
 
 class Users extends Component {
     constructor(){

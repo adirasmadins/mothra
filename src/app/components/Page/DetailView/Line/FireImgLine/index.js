@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {storage} from '../../../../../config/constants';
+import {storage} from '../../../../../config/firebase';
 class FireImgLine extends Component {
     constructor(){
         super();

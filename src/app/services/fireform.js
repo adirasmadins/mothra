@@ -1,4 +1,4 @@
-import {ref,storage} from '../config/constants'
+import {ref,storage} from '../config/firebase';
 import Messages from '../components/Messages';
 
 //Random GUID look a like string generator

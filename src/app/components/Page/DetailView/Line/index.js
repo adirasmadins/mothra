@@ -7,16 +7,16 @@ class Line extends Component {
         var value = '';
         switch(this.props.settings.type) {
                     case 'date':
-                        var value = <DateLine value={this.props.value} />
+                        value = <DateLine value={this.props.value} />
                         break;
                     case 'fireimg':
                         if(this.props.value!==undefined)
-                            var value = <FireImgLine value={this.props.value} />
+                            value = <FireImgLine value={this.props.value} />
                         break;
                     case 'string':
-                        var value = <StringLine value={this.props.value} />
+                        value = <StringLine value={this.props.value} />
                     default:
-                        var value = <StringLine value={this.props.value} />
+                        value = <StringLine value={this.props.value} />
                 }
 
         return <tr>

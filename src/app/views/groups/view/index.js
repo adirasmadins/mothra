@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Page from '../../../components/Page';
 import DetailView from '../../../components/Page/DetailView';
-import {db} from '../../../config/constants';
+import {db} from '../../../config/firebase';
 import {Link} from 'react-router-dom';
 
 class View extends Component {

@@ -5,16 +5,17 @@ import SubmitBtn from '../SubmitBtn';
 import Messages from '../../Messages';
 import Loader from '../Loader';
 import {addToFB} from '../../../services/fireform';
-import {db, storage} from '../../../config/constants';
+import {db, storage} from '../../../config/firebase';
 
 class Form extends Component {
 
     constructor(props) {
         super(props);
-        var state = {
+        let state = {
             item:{}
         };
-        /* Array/Object issue */
+
+        //Init state
         this.props.settings.properties.map((element) =>{
             state["item"][element.attribute] = {
                 attribute:element.attribute,
@@ -24,70 +25,55 @@ class Form extends Component {
                 settings:element
             }
         })
+
         state.disabled=false;
         this.state = state;
     }
 
     componentWillMount() {
+        // Get values from FireBase when 'update' action
         if(this.props.settings.action=='update')
         {
-            db.ref(this.props.settings.ref)
-            .once("value",(snap)=>{
+            db.ref(this.props.settings.ref).once("value",(snap)=>{
+
                 let item = snap.val();
-                item.key = snap.key;      
+                item.key = snap.key; 
 
-                let stateItem = {};
-                let hasFiles = false;
-                this.props.settings.properties.map((element) =>{
+                this.props.settings.properties.map((element) => {
+
+                    // If propery exist in FireBase
                     if (item[element.attribute] !== undefined) {
-                        if(element.type==="img"){
-                            stateItem[element.attribute] = {
-                                attribute:element.attribute,
-                                name:element.name,
-                                type:element.type,
-                                value:item[element.attribute],
-                                settings:element
-                            }                            
-                            storage.ref(item.icon).getDownloadURL().then((url) => {
-                                let item = this.state.item;
-                                item[element.attribute].value = url;
-                                this.setState({'item':item});
-                            })
 
+                        let stateItem = this.state.item;
+                        stateItem[element.attribute]= {
+                            attribute:element.attribute,
+                            name:element.name,
+                            type:element.type,
+                            value:item[element.attribute],
+                            settings:element
                         }
-                        else {
-                            stateItem[element.attribute] = {
-                                attribute:element.attribute,
-                                name:element.name,
-                                type:element.type,
-                                value:item[element.attribute],
-                                settings:element
-                            }
+                        this.setState({'item':stateItem});
+
+                        // Image type property only
+                        if(element.type==="img"){ 
+                            storage.ref(item.icon).getDownloadURL().then((url) => {
+                                let stateItem = this.state.item;
+                                stateItem[element.attribute].value = url;
+                                this.setState({'item':stateItem});
+                            })
                         }
 
                     }
                 })
 
-                this.setState({'item':stateItem});
                 Loader.enablePage();
-                // storage.ref(item.icon).getDownloadURL().then((url) => {
-                //     // this.setState({
-                //     //     item: {
-                //     //         id:item.id,
-                //     //         name:item.name,
-                //     //         createdAt:item.createdAt,
-                //     //         icon:url
-                //     //     }
-                //     // });
-                //     Loader.enablePage();
-                // })
             });
         }
         
     }
 
     componentDidMount() {
-        Loader.enablePage();
+        //Loader.enablePage();
     }
 
     //Form submit handler
@@ -105,9 +91,9 @@ class Form extends Component {
 
     //Validate input. Required fields.
     validate(){
-        var valid = true;
-        var message = "Необходимо заполнить поля ";
-        var requiredFields = [];
+        let valid = true;
+        let message = "Необходимо заполнить поля ";
+        let requiredFields = [];
 
         this.props.settings.properties.map((element) =>{
             if(element.required)
@@ -126,7 +112,7 @@ class Form extends Component {
 
     //Input change handler
     handleChange = (data) => {
-        var item = this.state.item;
+        let item = this.state.item;
         item[data.attribute] = data;
         this.setState({
             item: item
@@ -134,7 +120,6 @@ class Form extends Component {
     }
 
     render() {
-
         const body = this.props.settings.properties.map((element) =>{
                 switch(element.type) {
                     case 'img':
@@ -150,7 +135,7 @@ class Form extends Component {
 
         return (
             <div className="form-cnt">
-                <form action="" onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                     <div className="mb-5">
                         {body}
                     </div>

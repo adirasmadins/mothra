@@ -8,8 +8,8 @@ import Groups from './views/groups';
 	import GroupsAdd from './views/groups/add';
 	import GroupsView from './views/groups/view';
 	import GroupsUpdate from './views/groups/update';
-import { isAdmin } from './services/auth'
-import { firebaseAuth } from './config/constants'
+import { isAdmin } from './services/auth';
+import { firebaseAuth } from './config/firebase';
 
 import {
   BrowserRouter as Router,

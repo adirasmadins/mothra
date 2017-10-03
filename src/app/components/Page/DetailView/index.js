@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Line from './Line';
 import moment from 'moment';
-import {storage} from '../../../config/constants';
 import Loader from '../Loader';
 class DetailView extends Component {
     constructor(props) {
