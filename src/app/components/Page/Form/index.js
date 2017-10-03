@@ -20,7 +20,7 @@ class Form extends Component {
                 attribute:element.attribute,
                 name:element.name,
                 type:element.type,
-                value:element.value,
+                value:element.value||'',
                 settings:element
             }
         })
@@ -37,22 +37,39 @@ class Form extends Component {
                 item.key = snap.key;      
 
                 let stateItem = {};
+                let hasFiles = false;
                 this.props.settings.properties.map((element) =>{
                     if (item[element.attribute] !== undefined) {
-                        stateItem[element.attribute] = {
-                            attribute:element.attribute,
-                            name:element.name,
-                            type:element.type,
-                            value:item[element.attribute],
-                            settings:element
+                        if(element.type==="img"){
+                            stateItem[element.attribute] = {
+                                attribute:element.attribute,
+                                name:element.name,
+                                type:element.type,
+                                value:item[element.attribute],
+                                settings:element
+                            }                            
+                            storage.ref(item.icon).getDownloadURL().then((url) => {
+                                let item = this.state.item;
+                                item[element.attribute].value = url;
+                                this.setState({'item':item});
+                            })
+
                         }
-                        if(item[element.attribute].file !== undefined)
-                            stateItem[element.attribute].file = item[element.attribute].file;
+                        else {
+                            stateItem[element.attribute] = {
+                                attribute:element.attribute,
+                                name:element.name,
+                                type:element.type,
+                                value:item[element.attribute],
+                                settings:element
+                            }
+                        }
+
                     }
                 })
 
                 this.setState({'item':stateItem});
-
+                Loader.enablePage();
                 // storage.ref(item.icon).getDownloadURL().then((url) => {
                 //     // this.setState({
                 //     //     item: {
@@ -64,15 +81,13 @@ class Form extends Component {
                 //     // });
                 //     Loader.enablePage();
                 // })
-                Loader.enablePage();
             });
         }
         
     }
 
     componentDidMount() {
-        // if(this.props.settings.ref!==undefined)
-        //     Loader.disablePage();
+        Loader.enablePage();
     }
 
     //Form submit handler
@@ -111,7 +126,6 @@ class Form extends Component {
 
     //Input change handler
     handleChange = (data) => {
-        console.log(data);
         var item = this.state.item;
         item[data.attribute] = data;
         this.setState({
@@ -124,7 +138,7 @@ class Form extends Component {
         const body = this.props.settings.properties.map((element) =>{
                 switch(element.type) {
                     case 'img':
-                        return <ImageInput onChange={this.handleChange}  onFileRemove={this.onFileRemove} key={element.attribute} element={this.state.item[element.attribute]}/>
+                        return <ImageInput onChange={this.handleChange} key={element.attribute} element={this.state.item[element.attribute]}/>
                         break;
                     case 'string':
                         return <TextInput onChange={this.handleChange} key={element.attribute} element={this.state.item[element.attribute]}/>

@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import Page from '../../../components/Page';
 import DetailView from '../../../components/Page/DetailView';
-import { addGame } from '../../../services/games';
-import Messages from '../../../components/Messages';
 import {db} from '../../../config/constants';
 import {Link} from 'react-router-dom';
-import moment from 'moment';
 
 class View extends Component {
     render() {

@@ -1,23 +1,8 @@
 import React, { Component } from 'react';
 import Page from '../../../components/Page';
 import Form from '../../../components/Page/Form';
-import {db, storage} from '../../../config/constants';
-import Loader from '../../../components/Page/Loader';
 
 class Add extends Component {
-    constructor(props) {
-        super(props);
-        /*
-        this.state ={
-            item: {
-                id:"",
-                name:"",
-                createdAt:"",
-                icon:""
-            }
-        };*/
-    }
-
     componentWillMount () {
         // const id = this.props.match.params.id;
         // db.ref('games/'+id)

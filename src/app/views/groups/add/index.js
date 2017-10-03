@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Page from '../../../components/Page';
 import Form from '../../../components/Page/Form';
-import {addGame} from '../../../services/games';
 
 class Add extends Component {
     render() {

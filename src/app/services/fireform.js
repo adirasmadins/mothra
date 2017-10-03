@@ -29,9 +29,11 @@ export function addToFB (item,rootPath,action) {
             //If it's img
             if (item[property].type==='img') {
                 //Create FBpath for image
-                var path = item[property].settings.path + "/" + uniqueID() + item[property].value.name.substr(-4);
-                files.push({fileObject:item[property].value,path:path});
-                insertItem[property] = path;
+                if(item[property].file!==undefined) {
+                    var path = item[property].settings.path + "/" + uniqueID() + item[property].file.name.substr(-4);
+                    files.push({fileObject:item[property].file,path:path});
+                    insertItem[property] = path;
+                }
             }
             //For other property types
             else if(item[property].type!==undefined){

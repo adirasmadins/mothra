@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 class TextInput extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value:''
-        };
-    }
 
     onChangeHandler = (event) => {
         const target = event.target;
@@ -16,10 +10,6 @@ class TextInput extends Component {
         // item[name] = value;
         const value = target.value;
         const name = target.name;
-
-        this.setState({
-            value: value
-        });
 
         this.props.onChange({
             type:'string',
@@ -36,7 +26,6 @@ class TextInput extends Component {
                     <label>{this.props.element.name}</label>
                     <input onChange={this.onChangeHandler} value={this.props.element.value} className="form-control" name={this.props.element.attribute} type="text" placeholder={this.props.element.name} />
                 </div>
-            
     }
 }
 

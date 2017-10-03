@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
 import Header from './Header';
 import Row from './Row';
 import Loader from '../Loader';
