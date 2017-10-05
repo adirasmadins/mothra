@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Line from './Line';
 import moment from 'moment';
 import Loader from '../Loader';
+import {db} from '../../../config/firebase';
 class DetailView extends Component {
     constructor(props) {
         super(props);
@@ -11,7 +12,7 @@ class DetailView extends Component {
     }
 
     componentWillMount () {
-        this.props.settings.ref
+        db.ref(this.props.settings.ref)
         .once("value",(snap)=>{
             let item = snap.val();
 

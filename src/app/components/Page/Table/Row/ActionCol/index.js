@@ -10,7 +10,7 @@ class ActionCol extends Component {
         console.log(this.props.item);
         if (r === true) {
             ref.child(this.props.item.path).remove().then(()=>{
-                Messages.addSuccesMsg(`Элемент "${this.props.item.name}" удален.`);
+                Messages.addSuccesMsg(`Item removed.`);
             }).then(()=>{
                 this.props.settings.properties.map((element)=>{
                     if(element.type==="fireimg")

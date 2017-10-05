@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Row from './Row';
 import Loader from '../Loader';
+import {db, storage} from '../../../config/firebase';
+
 class Table extends Component {
     constructor(){
         super();
@@ -11,7 +13,8 @@ class Table extends Component {
     }
 
     componentWillMount () {
-        this.props.settings.ref.orderByChild('createdAt')
+        //Get List from FireBase
+        db.ref(this.props.settings.ref).orderByChild('createdAt')
         .on("value",(snap)=>{
 
             let newState = [];
@@ -30,7 +33,7 @@ class Table extends Component {
             }.bind(this));
 
             this.setState({
-                items: newState
+                items: newState.reverse()
             });
 
             Loader.enablePage();
@@ -38,7 +41,7 @@ class Table extends Component {
     }
 
     componentWillUnmount () {
-        this.props.settings.ref.off();
+       db.ref(this.props.settings.ref).off();
     }
 
     render() {

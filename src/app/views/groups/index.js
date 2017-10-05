@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Page from '../../components/Page';
 import Table from '../../components/Page/Table';
-import {db} from '../../config/firebase';
 import {Link} from 'react-router-dom';
 
 class Groups extends Component {
@@ -21,7 +20,7 @@ class Groups extends Component {
 
     render() {
         const settings = {
-            ref: db.ref('games'),
+            ref: 'games',
             properties:[
                 {
                     attribute:"id",

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import ImageInput from './ImageInput';
 import TextInput from './TextInput';
 import SubmitBtn from '../SubmitBtn';
-import Messages from '../../Messages';
 import Loader from '../Loader';
-import {addToFB} from '../../../services/fireform';
+import Messages from '../../Messages';
+import FirebaseDB from '../../../services/firebasedb';
+import Validator from '../../../services/validator';
 import {db, storage} from '../../../config/firebase';
 
 class Form extends Component {
@@ -73,7 +74,7 @@ class Form extends Component {
     }
 
     componentDidMount() {
-        //Loader.enablePage();
+        
     }
 
     //Form submit handler
@@ -83,31 +84,28 @@ class Form extends Component {
         {
             this.setState({disabled: true});
             //Add game to FireBase DateBase
-            addToFB(this.state.item, this.props.settings.ref,this.props.settings.action).then(()=>{
+            let firebaseDB = new FirebaseDB(this.state.item, this.props.settings);
+            firebaseDB.insert().then(()=>{
                 this.setState({disabled: false});
-            })
+                //If saved then show success message else error message
+                if(firebaseDB.saved()) {
+                    Messages.addSuccesMsg(this.props.settings.successMsg||"Success");
+                } else {
+                    Messages.addErrorMsg(firebaseDB.getErrors());
+                }                
+            });
         }
     }
 
     //Validate input. Required fields.
     validate(){
-        let valid = true;
-        let message = "Необходимо заполнить поля ";
-        let requiredFields = [];
-
-        this.props.settings.properties.map((element) =>{
-            if(element.required)
-            {
-                if(this.state["item"][element.attribute]['value']===undefined||this.state["item"][element.attribute]['value']==='')
-                {
-                    valid = false;
-                    requiredFields.push('"'+element.name+'"');
-                }
-            }
-        })
-        if(!valid)
-            Messages.addErrorMsg(message + requiredFields.join(", "));
-        return valid;
+        var validator = new Validator(this.state.item, this.props.settings);
+        if(validator.validate()) {
+            return true;
+        } else {
+            Messages.addErrorMsg(validator.getMessage());
+            return false;
+        }
     }
 
     //Input change handler

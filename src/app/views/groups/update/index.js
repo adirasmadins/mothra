@@ -3,31 +3,11 @@ import Page from '../../../components/Page';
 import Form from '../../../components/Page/Form';
 
 class Add extends Component {
-    componentWillMount () {
-        // const id = this.props.match.params.id;
-        // db.ref('games/'+id)
-        // .once("value",(snap)=>{
-        //     let item = snap.val();
-        //     item.id = snap.key;
-        //     storage.ref(item.icon).getDownloadURL().then((url) => {
-        //         this.setState({
-        //             item: {
-        //                 id:item.id,
-        //                 name:item.name,
-        //                 createdAt:item.createdAt,
-        //                 icon:url
-        //             }
-        //         });
-        //         Loader.enablePage();
-        //     })
-        // });
-
-    }
-
     render() {
         const settings = {
             ref:"games/"+this.props.match.params.id,
             action:"update",
+            successMsg:"Group is updated",
             properties:[
                 {
                     attribute:"id",

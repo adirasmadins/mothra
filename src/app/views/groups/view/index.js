@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Page from '../../../components/Page';
 import DetailView from '../../../components/Page/DetailView';
-import {db} from '../../../config/firebase';
 import {Link} from 'react-router-dom';
 
 class View extends Component {
     render() {
         const settings = {
-            ref:db.ref('games/'+this.props.match.params.id),
+            ref:'games/'+this.props.match.params.id,
             properties:[
                 {
                     attribute:"id",

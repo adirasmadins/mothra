@@ -7,6 +7,7 @@ class Add extends Component {
         const settings = {
             ref:"games",
             action:"create",
+            successMsg:"New group is saved",
             properties:[
                 {
                     attribute:"id",
