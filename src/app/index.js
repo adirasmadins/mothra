@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Messages from './components/Messages';
 import Home from './views';
-import User from './User';
 import Users from './views/users';
 import Login from './views/login';
 import Groups from './views/groups';
@@ -75,7 +74,7 @@ export default class App extends Component {
 	  this.removeListener()
 	}
 	render(){
-		return  this.state.authed === false
+		return (this.state.authed === false
 				?<Login></Login>
 				:<Router>
 					<div className="app">
@@ -92,13 +91,13 @@ export default class App extends Component {
 								<li>
 									<NavLink to="/users">
 										<img src="/images/svg/man.svg" alt=""/>
-										<span>Пользователи</span>
+										<span>Users</span>
 									</NavLink>
 								</li>
 								<li>
 									<NavLink to="/groups">
 										<img src="/images/svg/group.svg" alt=""/>
-										<span>Группы</span>
+										<span>Groups</span>
 									</NavLink>
 								</li>
 							</ul>
@@ -108,13 +107,12 @@ export default class App extends Component {
 
 						<Route exact path="/" component={Home} />
 						<Route exact path="/users" component={Users}/>
-						<Route path="/user/:userId" component={User}/>
 						<Route exact path="/groups" component={Groups}/>
 							<Route path="/groups/add" component={GroupsAdd}/>
 							<Route path="/groups/view/:id" component={GroupsView}/>
 							<Route path="/groups/update/:id" component={GroupsUpdate}/>
 						<Route path="/login" component={Login}/>
 					</div>
-				</Router>
+				</Router>)
 	}
 }

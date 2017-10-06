@@ -3,9 +3,6 @@ import Loader from './Loader';
 
 /**
  * Main page component
- * @prop location {string} Curent root page location
- * @prop title {string} Page title
- * @prop addBtn {boolean} Show or not button for adding new item
  */
 
 class Page extends Component {

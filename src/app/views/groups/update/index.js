@@ -17,13 +17,24 @@ class Add extends Component {
                 },
                 {
                     attribute:"name",
-                    name:"Название игры",
+                    name:"Name",
                     required:true,
                     type:"string"
                 },
                 {
+                    attribute:"nickname",
+                    name:"Nickname",
+                    type:"string"
+                },                   
+                {
+                    attribute:"avatar",
+                    name:"Avatar",                   
+                    type:"img",
+                    path:"games"
+                },                   
+                {
                     attribute:"icon",
-                    name:"Иконка",
+                    name:"Icon",
                     required:true,
                     type:"img",                    
                     path:"games"

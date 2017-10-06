@@ -14,22 +14,23 @@ class View extends Component {
                 },
                 {
                     attribute:"name",
-                    name:"Название игры"
+                    name:"Name"
                 },
                 {
                     attribute:"createdAt",
-                    name:"Время создания",
+                    name:"Created at",
                     type:"date"
                 },
                 {
                     attribute:"icon",
-                    name:"Иконка",
+                    name:"Icon",
                     type:"fireimg"
                 }
             ]
         }
+
         return (
-            <Page title={"Игра " + this.props.match.params.id} location="games" addBtn="false">
+            <Page>
                 <h1 className="display-3">{"Game " + this.props.match.params.id}</h1>
                 <p className="lead text-muted">View {"game " + this.props.match.params.id}</p>     
                 <Link to={"/groups/update/" + this.props.match.params.id} className="btn btn-primary mb-4">Update</Link>       

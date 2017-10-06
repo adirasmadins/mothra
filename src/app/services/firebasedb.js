@@ -25,8 +25,6 @@ class Firebasedb {
 	//Add item to Firebase datebase and storage
     insert() {
 	    let properties = this.properties;
-	    //Generate random name for image that will be inserted
-	    let randomName = this.uniqueID();
 	    //Files array, will store File objects
 	    let files = [];
 	    //Item that will be actual insert
@@ -42,9 +40,13 @@ class Firebasedb {
 	            if (properties[property].type==='img') {
 	                //Create FBpath for image
 	                if(properties[property].file!==undefined) {
+	                	//Generate random name for image that will be inserted
+	    				let randomName = this.uniqueID();
 	                    var path = properties[property].settings.path + "/" + randomName + properties[property].file.name.substr(-4);
 	                    files.push({fileObject:properties[property].file,path:path});
 	                    insertItem[property] = path;
+	                } else {
+	                	insertItem[property] = properties[property].value;
 	                }
 	            }
 	            //For other property types
@@ -76,6 +78,7 @@ class Firebasedb {
 	    	} else {
 	    		// If update item
 			    for (let property in insertItem) {
+			    	console.log(properties[property]);
 			        if (insertItem.hasOwnProperty(property)) {
 			            if (insertItem[property]!==undefined) {	  
 			             	currentItem[property] = insertItem[property];
@@ -91,10 +94,10 @@ class Firebasedb {
 	            this.itemSaved = false;
 	        }
 	    }).then((e)=>{
-	        //Add item if images saved, or delete item if images can't be saved
+	        // Add item if images saved, or delete item if images can't be saved
 	        if(this.itemSaved)
 	        {
-
+	        	// All promises at once
 	            return Promise.all(files.map(function(file) {
 	                return storage.ref().child(file.path).put(file.fileObject);
 	            })).catch((e)=>{

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { logout } from '../services/auth'
+import Page from '../components/Page';
+import { logout } from '../services/auth';
 class Home extends Component {
-  render() {
-    return (
-        <div className="main-cnt">
-            <div className="logout-cnt">
-                <button onClick={()=>{logout()}} className="button submit-btn">Logout</button>
-            </div>
-        </div>
-    );
-  }
+
+  	render() {
+		return (
+			<Page loader={false}>
+				<button onClick={()=>{logout()}} className="btn btn-primary mt-4">Logout</button>
+			</Page>
+		);
+	}
 }
 
 export default Home;

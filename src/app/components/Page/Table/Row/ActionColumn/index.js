@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Messages from '../../../../../components/Messages';
-import {storage} from '../../../../../config/firebase';
+import {db,storage} from '../../../../../config/firebase';
 import {Link} from 'react-router-dom';
 class ActionCol extends Component {
     removeItem = ()=>{
-        const ref = this.props.settings.ref;
+        const ref = db.ref(this.props.settings.ref);
         //var r = window.confirm("Вы действительно желаете удалить элемент.");
         var r = true;
         console.log(this.props.item);

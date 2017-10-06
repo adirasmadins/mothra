@@ -1,30 +1,17 @@
 import React, { Component } from 'react';
 import Page from '../../components/Page';
 import Table from '../../components/Page/Table';
-import {db} from '../../config/firebase';
+import {Link} from 'react-router-dom';
 
 class Users extends Component {
-    constructor(){
-        super();
-        this.state = {
-            pageDisabled:true
-        }
-
-    }
-
-    onLoadHandler = () => {
-        this.setState({
-            pageDisabled: false
-        });
-    }
 
     render() {
         const settings = {
-            ref: db.ref('users'),
+            ref: 'users',
             properties:[
                 {
                     attribute:"access",
-                    name:"Доступ",
+                    name:"Access",
                     type:"string"
                 },                
                 {
@@ -37,29 +24,11 @@ class Users extends Component {
         }
 
         return (
-            <Page title="Игры" location="games">
-                <div className="filter-cnt">
-                    <p>Фильтр</p>
-                    <div className="filter-inner">
-                        <form action="">
-                            <input type="text" placeholder="Название игры"/>
-                            <button className="button submit-btn">Найти</button>
-                            <button className="button reset-btn">Сброс</button>
-                        </form>
-                    </div>
-                </div>
-                <div className="pagination">
-                    <div className="pagination__pages-list">
-                        <div className="pagination__pages-link">1</div>
-                        <div className="pagination__pages-link">2</div>
-                        <div className="pagination__pages-link">3</div>
-                        <div className="pagination__pages-link">4</div>
-                        <div className="pagination__pages-link">55</div>
-                    </div>
-                </div>
-                <div className="items-list">
-                    <Table onPageLoad={this.onLoadHandler} settings={settings}/>
-                </div>
+            <Page>
+                <h1 className="display-3">Users</h1>
+                <p className="lead text-muted">Users list</p>
+                <Link to={"/users/add"} className="btn btn-primary mb-4">Add user</Link>
+                <Table settings={settings}/>
             </Page>
         );
     }

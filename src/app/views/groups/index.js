@@ -4,20 +4,6 @@ import Table from '../../components/Page/Table';
 import {Link} from 'react-router-dom';
 
 class Groups extends Component {
-    constructor(){
-        super();
-        this.state = {
-            pageDisabled:true
-        }
-
-    }
-
-    onLoadHandler = () => {
-        this.setState({
-            pageDisabled: false
-        });
-    }
-
     render() {
         const settings = {
             ref: 'games',
@@ -29,17 +15,27 @@ class Groups extends Component {
                 },
                 {
                     attribute:"name",
-                    name:"Название игры",
+                    name:"Name",
                     type:"string"
                 },
                 {
+                    attribute:"nickname",
+                    name:"Nickname",
+                    type:"string"
+                },                
+                {
                     attribute:"createdAt",
-                    name:"Время создания",
+                    name:"Created at",
                     type:"date"
                 },
                 {
+                    attribute:"avatar",
+                    name:"Avatar",
+                    type:"fireimg"
+                },                
+                {
                     attribute:"icon",
-                    name:"Иконка",
+                    name:"Icon",
                     type:"fireimg"
                 },
                 {
@@ -51,14 +47,12 @@ class Groups extends Component {
             ]
         }
 
-
-
         return (
             <Page>
                 <h1 className="display-3">Groups</h1>
                 <p className="lead text-muted">Groups list</p>
                 <Link to={"/groups/add"} className="btn btn-primary mb-4">Add group</Link>
-                <Table onPageLoad={this.onLoadHandler} settings={settings}/>
+                <Table settings={settings}/>
             </Page>
         );
     }

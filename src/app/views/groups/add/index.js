@@ -17,13 +17,24 @@ class Add extends Component {
                 },
                 {
                     attribute:"name",
-                    name:"Название игры",
+                    name:"Name",
                     required:true,
                     type:"string"
                 },
                 {
+                    attribute:"nickname",
+                    name:"Nickname",
+                    type:"string"
+                },                
+                {
+                    attribute:"avatar",
+                    name:"Avatar",                   
+                    type:"img",
+                    path:"games"
+                },                  
+                {
                     attribute:"icon",
-                    name:"Иконка",                   
+                    name:"Icon",                   
                     required:true,
                     type:"img",
                     path:"games"
@@ -32,7 +43,7 @@ class Add extends Component {
         }
 
         return (
-            <Page loader={false} location="games">
+            <Page loader={false}>
                 <h1 className="display-3">New group</h1>
                 <p className="lead text-muted">Add new group</p>            
                 <Form settings={settings} />

@@ -43,7 +43,7 @@ class Form extends Component {
                 this.props.settings.properties.map((element) => {
 
                     // If propery exist in FireBase
-                    if (item[element.attribute] !== undefined) {
+                    if (item[element.attribute] !== undefined && item[element.attribute] !== "") {
 
                         let stateItem = this.state.item;
                         stateItem[element.attribute]= {
@@ -57,9 +57,9 @@ class Form extends Component {
 
                         // Image type property only
                         if(element.type==="img"){ 
-                            storage.ref(item.icon).getDownloadURL().then((url) => {
+                            storage.ref(item[element.attribute]).getDownloadURL().then((url) => {
                                 let stateItem = this.state.item;
-                                stateItem[element.attribute].value = url;
+                                stateItem[element.attribute].url = url;
                                 this.setState({'item':stateItem});
                             })
                         }

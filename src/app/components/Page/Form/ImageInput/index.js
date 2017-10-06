@@ -11,6 +11,7 @@ class ImageInput extends Component {
         if (imageType.test(file.type)) {            
             this.props.onChange({
                 type:'img',
+                url:file.preview,
                 value:file.preview,
                 file:file,
                 name:this.props.element.name,
@@ -23,6 +24,7 @@ class ImageInput extends Component {
     // Remove button handler
     removeImg = () => {
         this.props.element.value = '';
+        this.props.element.url = '';
         this.props.element.file = undefined;
         this.props.onChange(
             this.props.element
@@ -39,9 +41,9 @@ class ImageInput extends Component {
 
         // Show preview image.
         let img = null;
-        if(this.props.element.value)
+        if(this.props.element.url)
         {
-            img = <img alt="" src={this.props.element.value} className="img-thumbnail img-thumbnail-upload"/>
+            img = <img alt="" src={this.props.element.url} className="img-thumbnail img-thumbnail-upload"/>
         }
 
         return (
