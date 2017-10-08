@@ -1,30 +1,20 @@
 import React, { Component } from 'react';
-import { login, resetPassword } from '../../services/auth'
-
-function setErrorMsg(error) {
-	return {
-		loginMessage: error
-	}
-
-}
+import { login, resetPassword } from '../../services/auth';
+import Messages from '../../components/Messages';
 
 class Login extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault()
 		login(this.email.value, this.pw.value)
 		.catch((error) => {
-			this.setState(setErrorMsg('Invalid username/password.'))
+			Messages.addErrorMsg('Invalid username/password.');
 			console.log(error);
 		})
-	}
-	resetPassword = () => {
-		resetPassword(this.email.value)
-		.then(() => this.setState(setErrorMsg(`Password reset email sent to ${this.email.value}.`)))
-		.catch((error) => this.setState(setErrorMsg(`Email address not found.`)))
 	}
 	render() {
 		return (
 			<div className="login-page">
+				<Messages />
 				<form onSubmit={this.handleSubmit} className="container h-100">
 					<div className="row justify-content-center align-items-center h-100">
 						<div className="col-sm-6 col-12">

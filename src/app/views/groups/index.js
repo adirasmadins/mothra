@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 class Groups extends Component {
     render() {
         const settings = {
-            ref: 'games',
+            ref: 'groups',
             properties:[
                 {
                     attribute:"id",
@@ -19,23 +19,28 @@ class Groups extends Component {
                     type:"string"
                 },
                 {
-                    attribute:"nickname",
-                    name:"Nickname",
+                    attribute:"description",
+                    name:"Description",
                     type:"string"
-                },                
+                },                 
                 {
                     attribute:"createdAt",
                     name:"Created at",
                     type:"date"
-                },
+                }, 
                 {
-                    attribute:"avatar",
-                    name:"Avatar",
-                    type:"fireimg"
-                },                
+                    attribute:"updatedAt",
+                    name:"Updated at",
+                    type:"date"
+                },                  
                 {
-                    attribute:"icon",
-                    name:"Icon",
+                    attribute:"sigil",
+                    name:"Sigil",                   
+                    type:"fireimg",
+                },                            
+                {
+                    attribute:"logo",
+                    name:"Logo",
                     type:"fireimg"
                 },
                 {

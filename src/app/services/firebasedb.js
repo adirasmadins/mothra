@@ -62,6 +62,8 @@ class Firebasedb {
 	    if(action===undefined||action==='create')
 	    	insertItem.createdAt = Date.now();
 
+	    insertItem.updatedAt = Date.now();
+
 	    /*
 	        FireBase transaction.
 	        After item inserted, add images to storage.

@@ -5,9 +5,9 @@ import Form from '../../../components/Page/Form';
 class Add extends Component {
     render() {
         const settings = {
-            ref:"groups/"+this.props.match.params.id,
+            ref:"users/"+this.props.match.params.id,
             action:"update",
-            successMsg:"Group is updated",
+            successMsg:"User is updated",
             properties:[
                 {
                     attribute:"id",
@@ -18,34 +18,29 @@ class Add extends Component {
                 {
                     attribute:"name",
                     name:"Name",
+                    type:"string",
+                    required:true
+                },        
+                {
+                    attribute:"nickname",
+                    name:"Nickname",
                     required:true,
                     type:"string"
-                },
+                },    
                 {
-                    attribute:"description",
-                    name:"Description",
-                    type:"string"
-                },             
-                {
-                    attribute:"sigil",
-                    name:"Sigil",                   
-                    type:"img",
-                    path:"games"
-                },                                     
-                {
-                    attribute:"logo",
-                    name:"Logo",                   
+                    attribute:"avatar",
+                    name:"Avatar",
                     required:true,
                     type:"img",
                     path:"games"
-                }             
+                }                                                      
             ]
         }
 
         return (
             <Page>
-                <h1 className="display-3">Update group</h1>
-                <p className="lead text-muted">Update group "{this.props.match.params.id}"</p>              
+                <h1 className="display-3">Update user</h1>
+                <p className="lead text-muted">Update user "{this.props.match.params.id}"</p>              
                 <Form settings={settings} />
             </Page>
         );

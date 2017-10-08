@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import Messages from './components/Messages';
 import Home from './views';
 import Users from './views/users';
+	import UsersAdd from './views/users/add';
+	import UsersView from './views/users/view';
+	import UsersUpdate from './views/users/update';
 import Login from './views/login';
 import Groups from './views/groups';
 	import GroupsAdd from './views/groups/add';
 	import GroupsView from './views/groups/view';
 	import GroupsUpdate from './views/groups/update';
 import { isAdmin } from './services/auth';
-import { firebaseAuth } from './config/firebase';
+import { auth } from './config/firebase';
 
 import {
   BrowserRouter as Router,
@@ -51,7 +54,7 @@ export default class App extends Component {
 	}
 
 	componentDidMount () {
-	  this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
+	  this.removeListener = auth.onAuthStateChanged((user) => {
 		if (user) {
 			isAdmin(user).then((snapshot) => {
 				if(snapshot.val()==='A')
@@ -107,6 +110,9 @@ export default class App extends Component {
 
 						<Route exact path="/" component={Home} />
 						<Route exact path="/users" component={Users}/>
+							<Route path="/users/add" component={UsersAdd}/>
+							<Route path="/users/view/:id" component={UsersView}/>
+							<Route path="/users/update/:id" component={UsersUpdate}/>						
 						<Route exact path="/groups" component={Groups}/>
 							<Route path="/groups/add" component={GroupsAdd}/>
 							<Route path="/groups/view/:id" component={GroupsView}/>

@@ -5,9 +5,9 @@ import Form from '../../../components/Page/Form';
 class Add extends Component {
     render() {
         const settings = {
-            ref:"groups",
+            ref:"users",
             action:"create",
-            successMsg:"New group is saved",
+            successMsg:"New user is added",
             properties:[
                 {
                     attribute:"id",
@@ -18,34 +18,29 @@ class Add extends Component {
                 {
                     attribute:"name",
                     name:"Name",
+                    type:"string",
+                    required:true
+                },        
+                {
+                    attribute:"nickname",
+                    name:"Nickname",
                     required:true,
                     type:"string"
-                },
+                },    
                 {
-                    attribute:"description",
-                    name:"Description",
-                    type:"string"
-                },             
-                {
-                    attribute:"sigil",
-                    name:"Sigil",                   
-                    type:"img",
-                    path:"games"
-                },                                     
-                {
-                    attribute:"logo",
-                    name:"Logo",                   
+                    attribute:"avatar",
+                    name:"Avatar",
                     required:true,
                     type:"img",
                     path:"games"
-                }             
+                }                                                      
             ]
         }
 
         return (
             <Page loader={false}>
-                <h1 className="display-3">New group</h1>
-                <p className="lead text-muted">Add new group</p>            
+                <h1 className="display-3">New user</h1>
+                <p className="lead text-muted">Add new user</p>            
                 <Form settings={settings} />
             </Page>
         );

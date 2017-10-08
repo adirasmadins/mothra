@@ -10,10 +10,30 @@ class Users extends Component {
             ref: 'users',
             properties:[
                 {
-                    attribute:"access",
-                    name:"Access",
+                    attribute:"name",
+                    name:"Name",
                     type:"string"
-                },                
+                },        
+                {
+                    attribute:"nickname",
+                    name:"Nickname",
+                    type:"string"
+                },    
+                {
+                    attribute:"createdAt",
+                    name:"Created at",
+                    type:"date"
+                },  
+                {
+                    attribute:"updatedAt",
+                    name:"Updated at",
+                    type:"date"
+                },                                
+                {
+                    attribute:"avatar",
+                    name:"Avatar",
+                    type:"fireimg"
+                },                                            
                 {
                     attribute:"table_action",
                     name:"",
