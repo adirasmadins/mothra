@@ -5,7 +5,8 @@ import Form from '../../../components/Page/Form';
 class Add extends Component {
     render() {
         const settings = {
-            ref:"groups/"+this.props.match.params.id,
+            ref:"groups",
+            id:this.props.match.params.id,
             action:"update",
             successMsg:"Group is updated",
             properties:[

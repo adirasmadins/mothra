@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Messages from '../../../../../components/Messages';
-import {db,storage} from '../../../../../config/firebase';
+import {db, storage} from '../../../../../config/firebase';
+import FirebaseDB from '../../../../../services/firebasedb';
 import {Link} from 'react-router-dom';
 class ActionCol extends Component {
     removeItem = ()=>{
@@ -9,9 +10,14 @@ class ActionCol extends Component {
         var r = true;
         console.log(this.props.item);
         if (r === true) {
-            ref.child(this.props.item.path).remove().then(()=>{
+            ref.child(this.props.item.path).remove()
+            .then(()=>{
+                FirebaseDB.counterDicrement(this.props.settings.ref);
+            })
+            .then(()=>{
                 Messages.addSuccesMsg(`Item removed.`);
-            }).then(()=>{
+            })
+            .then(()=>{
                 this.props.settings.properties.map((element)=>{
                     if(element.type==="fireimg")
                     {

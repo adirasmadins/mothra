@@ -10,7 +10,7 @@ class Line extends Component {
                         value = <DateLine value={this.props.value} />
                         break;
                     case 'fireimg':
-                        if(this.props.value!==undefined)
+                        if(this.props.value!==undefined&&this.props.value!=='')
                             value = <FireImgLine value={this.props.value} />
                         break;
                     case 'string':

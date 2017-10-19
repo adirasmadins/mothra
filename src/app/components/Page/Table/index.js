@@ -3,18 +3,20 @@ import Header from './Header';
 import Row from './Row';
 import Loader from '../Loader';
 import {db, storage} from '../../../config/firebase';
+import PageCounter from './PageCounter';
 
 class Table extends Component {
     constructor(){
         super();
         this.state = {
-            items:[]
+            items:[],
+            count:0
         }
     }
 
     componentWillMount () {
         //Get List from FireBase
-        db.ref(this.props.settings.ref).orderByChild('createdAt')
+        db.ref(this.props.settings.ref).orderByChild('createdAt').limitToLast(10)
         .on("value",(snap)=>{
 
             let newState = [];
@@ -38,6 +40,7 @@ class Table extends Component {
 
             Loader.enablePage();
         });
+
     }
 
     componentWillUnmount () {
@@ -50,12 +53,20 @@ class Table extends Component {
             }
         )
         return (
-            <table className="table">               
-                <Header settings={this.props.settings}/>
-                <tbody>
-                    {tablfeInfo}
-                </tbody>
-            </table>
+            <div>
+                <div className="d-flex">
+                    <PageCounter settings={this.props.settings}/>
+                </div>          
+                <table className="table">               
+                    <Header settings={this.props.settings}/>
+                    <tbody>
+                        {tablfeInfo}
+                    </tbody>
+                </table>
+                <div className="d-flex justify-content-center">
+                    <button className="btn btn-primary btn-lg mb-5 mt-3">Next Page</button>
+                </div>
+            </div>
         );
     }
 }

@@ -6,7 +6,8 @@ import {Link} from 'react-router-dom';
 class View extends Component {
     render() {
         const settings = {
-            ref:'groups/'+this.props.match.params.id,
+            ref:'groups',
+            id:this.props.match.params.id,
             properties:[
                 {
                     attribute:"id",

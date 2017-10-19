@@ -12,7 +12,7 @@ class DetailView extends Component {
     }
 
     componentWillMount () {
-        db.ref(this.props.settings.ref)
+        db.ref(this.props.settings.ref).child(this.props.settings.id)
         .once("value",(snap)=>{
             let item = snap.val();
 

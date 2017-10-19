@@ -33,9 +33,10 @@ class Form extends Component {
 
     componentWillMount() {
         // Get values from FireBase when 'update' action
+        FirebaseDB.count('groups');
         if(this.props.settings.action=='update')
         {
-            db.ref(this.props.settings.ref).once("value",(snap)=>{
+            db.ref(this.props.settings.ref).child(this.props.settings.id).once("value",(snap)=>{
 
                 let item = snap.val();
                 item.key = snap.key; 
@@ -85,7 +86,7 @@ class Form extends Component {
             this.setState({disabled: true});
             //Add game to FireBase DateBase
             let firebaseDB = new FirebaseDB(this.state.item, this.props.settings);
-            firebaseDB.insert().then(()=>{
+            firebaseDB.save().then(()=>{
                 this.setState({disabled: false});
                 //If saved then show success message else error message
                 if(firebaseDB.saved()) {

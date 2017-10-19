@@ -23,7 +23,7 @@ class Firebasedb {
 	}
 
 	//Add item to Firebase datebase and storage
-    insert() {
+    save() {
 	    let properties = this.properties;
 	    //Files array, will store File objects
 	    let files = [];
@@ -56,9 +56,6 @@ class Firebasedb {
 	        }
 	    }
 
-	    //If no Id then use default
-	    let id = properties.id.value||'default';
-
 	    if(action===undefined||action==='create')
 	    	insertItem.createdAt = Date.now();
 
@@ -71,7 +68,7 @@ class Firebasedb {
 	    if(action===undefined||action==='create')
 	        var newItem = db.ref().child(`${rootRef}`).push();
 	    else
-	        var newItem = db.ref().child(`${rootRef}`);
+	        var newItem = db.ref(rootRef).child(this.settings.id);
 
 	    return newItem.transaction(function(currentItem) {
 	    	if(currentItem===null) {
@@ -94,6 +91,13 @@ class Firebasedb {
 	            this.itemSaved = false;
 	        } else if (!committed) {
 	            this.itemSaved = false;
+	        }
+
+	        // Increment counter if commited
+	        if(committed) {
+	        	if(action===undefined||action==='create') {
+	        		Firebasedb.counterIncrement(rootRef);
+	        	}
 	        }
 	    }).then((e)=>{
 	        // Add item if images saved, or delete item if images can't be saved
@@ -124,5 +128,39 @@ class Firebasedb {
     saved() {
     	return this.itemSaved;
     }
+
+    static counterIncrement(countRef) {
+    	return db.ref('counters').child(countRef).transaction(current => {
+    		return (current || 0) + 1;
+    	})    	
+    }
+
+    static counterDicrement(countRef) {
+    	return db.ref('counters').child(countRef).transaction(current => {
+    		return (current || 0) - 1;
+    	})    	
+    }
+
+    static count(countRef) {
+    	//db.ref('counters/'+countRef).remove();
+    	return db.ref('counters/'+countRef).once("value").then((snap) => {
+    		let counter = snap.val();
+    		if (counter===null) {
+    			return db.ref(countRef).once("value").then((snap) => {
+    				let num = snap.numChildren();
+    				db.ref('counters/' + countRef).set(num);
+    				return num;  	
+    			});
+    			
+    		} else {
+    			return counter;
+    		}
+    	})
+    }
+    
+    //Ref to counters
+    static counter(countRef) {
+    	return db.ref('counters/'+countRef);
+    }    
 }
 export default Firebasedb;
