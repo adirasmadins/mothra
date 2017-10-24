@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Row from './Row';
 import Loader from '../Loader';
+import FirebaseModel from '../../../services/firebasemodel';
 import {db, storage} from '../../../config/firebase';
 import PageCounter from './PageCounter';
+import { connect } from 'react-redux';
+
+var FirebaseM = new FirebaseModel();
 
 class Table extends Component {
     constructor(){
@@ -13,7 +17,7 @@ class Table extends Component {
             count:0
         }
     }
-
+    
     componentWillMount () {
         //Get List from FireBase
         db.ref(this.props.settings.ref).orderByChild('createdAt').limitToLast(10)
@@ -43,11 +47,16 @@ class Table extends Component {
 
     }
 
+    emmiterHandler = () => {
+        this.props.dispatch({type:'ADD_ITEM',payload:{a:1,b:2}});       
+    }
+
     componentWillUnmount () {
        db.ref(this.props.settings.ref).off();
     }
 
     render() {
+        console.log(this.props);
         const tablfeInfo = this.state.items.map((item) =>{
                 return <Row key={item.path} settings={this.props.settings} item={item}/>
             }
@@ -64,11 +73,17 @@ class Table extends Component {
                     </tbody>
                 </table>
                 <div className="d-flex justify-content-center">
-                    <button className="btn btn-primary btn-lg mb-5 mt-3">Next Page</button>
+                    <button onClick={this.emmiterHandler} className="btn btn-primary btn-lg mb-5 mt-3">Next Page</button>
                 </div>
             </div>
         );
     }
 }
 
-export default Table;
+function mapStateToProps (state) {
+    return {
+        test: state
+    }
+}
+
+export default connect(mapStateToProps)(Table);
