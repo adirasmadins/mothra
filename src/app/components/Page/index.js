@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Loader from './Loader';
+import Loader from './loader';
 import { connect } from 'react-redux';
 
 /**
@@ -20,7 +20,8 @@ class Page extends Component {
 
 function mapStateToProps (state) {
 	return {
-		test: state
+		states: state.states,
+		page: state.page
 	}
 }
 

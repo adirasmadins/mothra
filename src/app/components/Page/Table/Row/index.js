@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import StringColumn from './StringColumn';
-import DateColumn from './DateColumn';
-import ActionColumn from './ActionColumn';
-import FireImgColumn from './FireImgColumn';
+import StringColumn from './string-column';
+import DateColumn from './date-column';
+import ActionColumn from './action-column';
+import FireImgColumn from './fire-img-column';
 class Row extends Component {
     render() {
         const row = this.props.settings.properties.map((row) =>{

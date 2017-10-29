@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import StringLine from './StringLine';
-import DateLine from './DateLine';
-import FireImgLine from './FireImgLine';
+import StringLine from './string-line';
+import DateLine from './date-line';
+import FireImgLine from './fire-img-line';
 class Line extends Component {
     render() {
         var value = '';

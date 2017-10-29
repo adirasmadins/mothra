@@ -8,8 +8,6 @@ import FirebaseDB from '../../../services/firebasedb';
 import Validator from '../../../services/validator';
 import {db, storage} from '../../../config/firebase';
 import { connect } from 'react-redux';
-import { getItem } from '../../../actions';
-import { startPageLoad, endPageLoad } from '../../../actions/page-actions';
 
 class Form extends Component {
 
@@ -71,15 +69,8 @@ class Form extends Component {
                     }
                 })
 
-                //Loader.enablePage();
+                Loader.enablePage();
             });
-
-            this.props.dispatch(startPageLoad());
-            this.props
-            .dispatch(getItem({settings:this.props.settings}))
-            .then(() => {
-                this.props.dispatch(endPageLoad());
-            });                
         }
         
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Page from '../../../components/Page';
-import Form from '../../../components/Page/Form';
+import Page from '../../../components/page';
+import Form from '../../../components/page/form';
 
 class Add extends Component {
     render() {
@@ -42,7 +42,6 @@ class Add extends Component {
                 }             
             ]
         }
-
         return (
             <Page>
                 <h1 className="display-3">Update group</h1>

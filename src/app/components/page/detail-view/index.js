@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Line from './Line';
+import Line from './line';
 import moment from 'moment';
-import Loader from '../Loader';
+import Loader from '../loader';
 import {db} from '../../../config/firebase';
 class DetailView extends Component {
     constructor(props) {

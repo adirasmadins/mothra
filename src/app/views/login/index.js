@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { login, resetPassword } from '../../services/auth';
-import Messages from '../../components/Messages';
+import Messages from '../../components/messages';
 
 class Login extends Component {
 	handleSubmit = (e) => {

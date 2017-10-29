@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Page from '../../../components/Page';
-import DetailView from '../../../components/Page/DetailView';
+import Page from '../../../components/page';
+import DetailView from '../../../components/page/detail-view';
 import {Link} from 'react-router-dom';
 
 class View extends Component {

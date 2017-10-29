@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Messages from '../../../../../components/Messages';
+import Messages from '../../../../../components/messages';
 import {db, storage} from '../../../../../config/firebase';
 import FirebaseDB from '../../../../../services/firebasedb';
 import {Link} from 'react-router-dom';
@@ -10,7 +10,7 @@ class ActionCol extends Component {
         var r = true;
         console.log(this.props.item);
         if (r === true) {
-            ref.child(this.props.item.path).remove()
+            ref.child(this.props.item.key).remove()
             .then(()=>{
                 FirebaseDB.counterDicrement(this.props.settings.ref);
             })
@@ -31,8 +31,8 @@ class ActionCol extends Component {
     }
     render() {
         return <td className="align-middle">
-                    <Link to={this.props.location + "/view/"+this.props.item.path} className="btn btn-outline-primary btn-sm"><i className="fa fa-eye"></i></Link>
-                    &nbsp;<Link to={this.props.location + "/update/"+this.props.item.path} className="btn btn-outline-primary btn-sm"><i className="fa fa-pencil"></i></Link>
+                    <Link to={this.props.location + "/view/"+this.props.item.key} className="btn btn-outline-primary btn-sm"><i className="fa fa-eye"></i></Link>
+                    &nbsp;<Link to={this.props.location + "/update/"+this.props.item.key} className="btn btn-outline-primary btn-sm"><i className="fa fa-pencil"></i></Link>
                     &nbsp;<button onClick={this.removeItem} className="btn btn-outline-danger btn-sm"><i className="fa fa-trash-o"></i></button>
                 </td>
     }

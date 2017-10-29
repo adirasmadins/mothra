@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Page from '../components/Page';
+import Page from '../components/page';
 import { logout } from '../services/auth';
 class Home extends Component {
 

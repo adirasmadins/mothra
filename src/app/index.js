@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Messages from './components/Messages';
+import Messages from './components/messages';
 import Home from './views';
 import Users from './views/users';
 	import UsersAdd from './views/users/add';

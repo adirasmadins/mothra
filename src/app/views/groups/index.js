@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Page from '../../components/Page';
-import Table from '../../components/Page/Table';
+import Page from '../../components/page';
+import Table from '../../components/page/table';
 import {Link} from 'react-router-dom';
 
 class Groups extends Component {

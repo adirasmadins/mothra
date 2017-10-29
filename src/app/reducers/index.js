@@ -1,10 +1,10 @@
-export default function reducer(state = [], action){
-	switch (action.type) {
-		case 'ADD_ITEM':{
-			state = [...state, action.payload.b];
-			return state;
-			break;			
-		}
-	}
-	return state;
-}
+import { combineReducers } from 'redux';
+import items from './items';
+import page from './page';
+
+const rootReducer = combineReducers({
+	items: items,
+	page:page
+});
+
+export default rootReducer;
