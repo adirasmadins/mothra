@@ -8,7 +8,7 @@ import FirebaseDB from '../../../services/firebasedb';
 import Validator from '../../../services/validator';
 import {db, storage} from '../../../config/firebase';
 import { connect } from 'react-redux';
-import { getItem } from '../../../actions';
+import { getItem, clearItem, changeItem } from '../../../actions';
 import { startPageLoad, endPageLoad } from '../../../actions/page-actions';
 
 class Form extends Component {
@@ -84,10 +84,6 @@ class Form extends Component {
         
     }
 
-    componentDidMount() {
-        
-    }
-
     //Form submit handler
     handleSubmit = (event) => {
         event.preventDefault();
@@ -95,7 +91,7 @@ class Form extends Component {
         {
             this.setState({disabled: true});
             //Add game to FireBase DateBase
-            let firebaseDB = new FirebaseDB(this.state.item, this.props.settings);
+            let firebaseDB = new FirebaseDB(this.props.item, this.props.settings);
             firebaseDB.save().then(()=>{
                 this.setState({disabled: false});
                 //If saved then show success message else error message
@@ -110,7 +106,7 @@ class Form extends Component {
 
     //Validate input. Required fields.
     validate(){
-        var validator = new Validator(this.state.item, this.props.settings);
+        var validator = new Validator(this.props.item, this.props.settings);
         if(validator.validate()) {
             return true;
         } else {
@@ -121,23 +117,30 @@ class Form extends Component {
 
     //Input change handler
     handleChange = (data) => {
-        let item = this.state.item;
-        item[data.attribute] = data;
-        this.setState({
-            item: item
-        });
+        this.props.dispatch(changeItem(data));
+        // let item = this.state.item;
+        // item[data.attribute] = data;
+        // this.setState({
+        //     item: item
+        // });
+    }
+
+    componentWillUnmount () {
+       this.props.dispatch(clearItem()); 
     }
 
     render() {
         const body = this.props.settings.properties.map((element) =>{
+                let value = element.value || '';
+                let item = {...element, value:value, ...this.props.item[element.attribute]};
                 switch(element.type) {
                     case 'img':
-                        return <ImageInput onChange={this.handleChange} key={element.attribute} element={this.state.item[element.attribute]}/>
+                        return <ImageInput onChange={this.handleChange} key={element.attribute} element={item}/>
                         break;
                     case 'string':
-                        return <TextInput onChange={this.handleChange} key={element.attribute} element={this.state.item[element.attribute]}/>
+                        return <TextInput onChange={this.handleChange} key={element.attribute} element={item}/>
                     default:
-                        return <TextInput onChange={this.handleChange} key={element.attribute} element={this.state.item[element.attribute]}/>
+                        return <TextInput onChange={this.handleChange} key={element.attribute} element={item}/>
                 }
             }
         )
@@ -157,7 +160,7 @@ class Form extends Component {
 
 function mapStateToProps (state) {
     return {
-        item: state.item
+        item: state.items.item
     }
 }
 

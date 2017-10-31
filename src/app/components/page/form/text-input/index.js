@@ -15,8 +15,8 @@ class TextInput extends Component {
             type:'string',
             name:this.props.element.name,
             attribute:this.props.element.attribute,
-            value:value,
-            settings:this.props.element.settings
+            value:value
+            //settings:this.props.element.settings
         });
 
     }

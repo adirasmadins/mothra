@@ -27,14 +27,26 @@ export function getItem({type = 'firebase', ref, id, settings}){
     const provider = getProvider(type);
     return (dispatch) => {
         dispatch({type:ActionTypes.startFetching}); 
-                console.log(settings.id);
-        return provider.getItem({ref:settings.ref, id:settings.id}).then((list) => {
-            //dispatch({type:ActionTypes.getItemsList, payload:{list:list}});
+        return provider.getItem({ref:settings.ref, id:settings.id, settings:settings}).then((item) => {
+            dispatch({type:ActionTypes.getItem, payload:{item:item}});
             dispatch({type:ActionTypes.endFetching});  
-            return list; 
+            return item; 
         }).catch((e)=>{
             console.log(e);
         });
+    }
+}
+
+export function changeItem(data){
+    return {
+        type:ActionTypes.changeItem,
+        payload:{data:data}
+    }
+}
+
+export function clearItem(){
+    return {
+        type:ActionTypes.clearItem
     }
 }
 

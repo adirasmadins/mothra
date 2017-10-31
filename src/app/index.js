@@ -86,7 +86,7 @@ export default class App extends Component {
 							<header className="header">
 								<Link to="/">
 									<div className="logo">
-										<img src="/images/svg/honeycomb.svg" alt=""/>
+										<img src="/images/svg/butterfly.svg" alt=""/>
 									</div>
 								</Link>
 							</header>

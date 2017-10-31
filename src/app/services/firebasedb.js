@@ -3,6 +3,9 @@ import {db,storage} from '../config/firebase';
 class Firebasedb {
     constructor(properties, settings) {
         this.settings = settings;
+        settings.properties.map((element) => {
+        	properties[element.attribute].settings = element;
+        });
         this.properties = properties;
         this.message = "";
         this.error = [];

@@ -15,8 +15,8 @@ class ImageInput extends Component {
                 value:file.preview,
                 file:file,
                 name:this.props.element.name,
-                attribute:this.props.element.attribute,
-                settings:this.props.element.settings
+                attribute:this.props.element.attribute
+                //settings:this.props.element.settings
             });
         }
     }

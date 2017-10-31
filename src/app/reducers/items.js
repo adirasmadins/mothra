@@ -1,6 +1,7 @@
 import * as ActionTypes from '../actions/action-types';
 const initialState = {
 	list:[],
+	item:{},
 	fetching:false,
 	fetched:false
 }
@@ -11,6 +12,22 @@ export default function reducer(state = initialState, action){
 			return state;
 			break;			
 		}
+		case ActionTypes.getItem: {
+			state = {...state, item:{...action.payload.item}};
+			return state;
+			break;			
+		}	
+		case ActionTypes.clearItem: {
+			state = {...state, item:{}};
+			return state;
+			break;			
+		}
+		case ActionTypes.changeItem: {
+			state = {...state, item:{...state.item}};
+			state.item[action.payload.data.attribute] = action.payload.data;
+			return state;
+			break;			
+		}						
 		case ActionTypes.getItemsList: {
 			state = {...state, list:[...state.list,...action.payload.list]};
 			return state;
