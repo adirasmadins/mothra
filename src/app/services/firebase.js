@@ -1,8 +1,14 @@
 import {db,storage} from '../config/firebase';
+import { uniqueID } from './helpers';
 
 class FirebaseService {
 	setPage(page) {
 		this.currentPage = page;
+	}
+
+	addItem(ref, item) {
+		var key = db.ref().child(ref).push().key;
+		console.log(key);
 	}
 
 	getList(ref) {
@@ -12,8 +18,8 @@ class FirebaseService {
 	            let item = child.val();
 	            item.key = child.key;
 	            list.push(item);
-	            list.reverse();
 	        });
+	        list.reverse();	        
 	        return list;  
 	    });
 	}

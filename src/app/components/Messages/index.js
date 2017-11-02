@@ -1,60 +1,37 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { removeMessage } from '../../actions/messages';
+
 class Messages extends Component {
-
-    static addSuccesMsg(msg){
-        var msgBox = document.querySelector('.msg-main');
-        var div = document.createElement('div');
-        div.className = "message alert alert-success";
-        div.onclick = function() {
-            this.className += " fadeOut";
-            setTimeout(()=>{this.remove()},200);
-        };
-        div.innerHTML = msg;
-        msgBox.insertBefore(div, msgBox.firstChild);
-        div.className += " animated bounceInRight";
-    }
-
-    static addErrorMsg(msg){
-        var msgBox = document.querySelector('.msg-main');
-        var div = document.createElement('div');
-        div.className = "message alert alert-danger";
-        div.onclick = function() {
-            this.className += " fadeOut";
-            setTimeout(()=>{this.remove()},200);
-        };
-        div.innerHTML = msg;
-        msgBox.insertBefore(div, msgBox.firstChild);
-        div.className += " animated bounceInRight";
-    }
-
-    static addMsg(msg){
-        var msgBox = document.querySelector('.msg-main');
-        var div = document.createElement('div');
-        div.className = "message";
-        div.onclick = function() {
-            this.className += " fadeOut";
-            setTimeout(()=>{this.remove()},200);
-        };
-        div.innerHTML = msg;
-        msgBox.insertBefore(div, msgBox.firstChild);
-        div.className += " animated bounceInRight";
-    }
-
     render() {
+        const messages = this.props.messages.map((message, index) => {
+            switch(message.type) {
+                case 'common':
+                    return <div key={index} onClick={()=>{this.props.dispatch(removeMessage(index))}} className="message animated bounceInRight">{message.message}</div>;
+                break;
+                case 'success':
+                    return <div key={index} onClick={()=>{this.props.dispatch(removeMessage(index))}}  className="message alert alert-success animated bounceInRight">{message.message}</div>;
+                break;
+                case 'error':
+                    return <div key={index} onClick={()=>{this.props.dispatch(removeMessage(index))}}  className="message alert alert-danger animated bounceInRight">{message.message}</div>;
+                break;
+                default:
+                    return <div key={index} onClick={()=>{this.props.dispatch(removeMessage(index))}}  className="message animated bounceInRight">{message.message}</div>;
+                break;       
+            }     
+        });
         return (
             <div className="msg-main">
-                {/* <div className="message active">
-                    Группа успешно создана
-                </div>
-                <div className="message message_error active">
-                    Группа успешно создана
-                </div>
-                <div className="message message_success active">
-                    Группа успешно создана
-                </div> */}
+                {messages}
             </div>
         );
     }
 }
 
-export default Messages;
+function mapStateToProps (state) {
+    return {
+        messages: state.messages
+    }
+}
+
+export default connect(mapStateToProps)(Messages);

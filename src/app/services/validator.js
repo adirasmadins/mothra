@@ -16,7 +16,7 @@ class Validator{
         this.settings.properties.map((element) =>{
             if(element.required)
             {
-                if(this.properties[element.attribute]['value']===undefined||this.properties[element.attribute]['value']==='')
+                if(this.properties[element.attribute]===undefined||this.properties[element.attribute]['value']===undefined||this.properties[element.attribute]['value']==='')
                 {
                     valid = false;
                     requiredFields.push('"'+element.name+'"');

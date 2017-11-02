@@ -11,6 +11,16 @@ function getProvider(type) {
     }
 }
 
+export function addItem({type = 'firebase', ref, item}) {
+    const provider = getProvider(type);
+    return (dispatch) => {
+        dispatch({type:ActionTypes.startSaving}); 
+        return provider.addItem(ref, item)/*.then(() => {
+            dispatch({type:ActionTypes.endSaving});
+        })*/
+    }
+}
+
 export function getList({type = 'firebase', ref = '', page = 1}){
     const provider = getProvider(type);
 	return (dispatch) => {

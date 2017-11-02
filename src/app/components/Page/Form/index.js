@@ -3,12 +3,12 @@ import ImageInput from './image-input';
 import TextInput from './text-input';
 import SubmitBtn from '../submit-btn';
 import Loader from '../loader';
-import Messages from '../../messages';
 import FirebaseDB from '../../../services/firebasedb';
 import Validator from '../../../services/validator';
 import {db, storage} from '../../../config/firebase';
 import { connect } from 'react-redux';
-import { getItem, clearItem, changeItem } from '../../../actions';
+import { getItem, clearItem, changeItem, addItem } from '../../../actions';
+import * as Messages from '../../../actions/messages';
 import { startPageLoad, endPageLoad } from '../../../actions/page-actions';
 
 class Form extends Component {
@@ -89,18 +89,18 @@ class Form extends Component {
         event.preventDefault();
         if(this.validate())
         {
-            this.setState({disabled: true});
             //Add game to FireBase DateBase
             let firebaseDB = new FirebaseDB(this.props.item, this.props.settings);
-            firebaseDB.save().then(()=>{
-                this.setState({disabled: false});
-                //If saved then show success message else error message
-                if(firebaseDB.saved()) {
-                    Messages.addSuccesMsg(this.props.settings.successMsg||"Success");
-                } else {
-                    Messages.addErrorMsg(firebaseDB.getErrors());
-                }                
-            });
+            this.props.dispatch(addItem({ref:this.props.settings.ref, item:this.props.item}));
+
+            // firebaseDB.save().then(()=>{
+            //     //If saved then show success message else error message
+            //     if(firebaseDB.saved()) {
+            //         this.props.dispatch(Messages.addSuccessMessage(this.props.settings.successMsg||"Success"));
+            //     } else {
+            //         this.props.dispatch(Messages.addErrorMessage(firebaseDB.getErrors()));
+            //     }                
+            // });
         }
     }
 
@@ -110,7 +110,7 @@ class Form extends Component {
         if(validator.validate()) {
             return true;
         } else {
-            Messages.addErrorMsg(validator.getMessage());
+            this.props.dispatch(Messages.addErrorMessage(validator.getMessage()));
             return false;
         }
     }
