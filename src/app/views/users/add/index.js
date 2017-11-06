@@ -31,7 +31,7 @@ class Add extends Component {
                     attribute:"avatar",
                     name:"Avatar",
                     required:true,
-                    type:"img",
+                    type:"fireimg",
                     path:"games"
                 }                                                      
             ]

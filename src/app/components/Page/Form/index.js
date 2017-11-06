@@ -2,84 +2,26 @@ import React, { Component } from 'react';
 import ImageInput from './image-input';
 import TextInput from './text-input';
 import SubmitBtn from '../submit-btn';
-import Loader from '../loader';
-import FirebaseDB from '../../../services/firebasedb';
 import Validator from '../../../services/validator';
-import {db, storage} from '../../../config/firebase';
 import { connect } from 'react-redux';
-import { getItem, clearItem, changeItem, addItem } from '../../../actions';
+import { getItem, clearItem, changeItem, addItem, updateItem } from '../../../actions/items';
 import * as Messages from '../../../actions/messages';
 import { startPageLoad, endPageLoad } from '../../../actions/page-actions';
 
 class Form extends Component {
-
-    constructor(props) {
-        super(props);
-        let state = {
-            item:{}
-        };
-
-        //Init state
-        this.props.settings.properties.map((element) =>{
-            state["item"][element.attribute] = {
-                attribute:element.attribute,
-                name:element.name,
-                type:element.type,
-                value:element.value||'',
-                settings:element
-            }
-        })
-
-        state.disabled=false;
-        this.state = state;
-    }
-
     componentWillMount() {
         // Get values from FireBase when 'update' action
-        FirebaseDB.count('groups');
         if(this.props.settings.action=='update')
         {
-            db.ref(this.props.settings.ref).child(this.props.settings.id).once("value",(snap)=>{
-
-                let item = snap.val();
-                item.key = snap.key; 
-
-                this.props.settings.properties.map((element) => {
-
-                    // If propery exist in FireBase
-                    if (item[element.attribute] !== undefined && item[element.attribute] !== "") {
-
-                        let stateItem = this.state.item;
-                        stateItem[element.attribute]= {
-                            attribute:element.attribute,
-                            name:element.name,
-                            type:element.type,
-                            value:item[element.attribute],
-                            settings:element
-                        }
-                        this.setState({'item':stateItem});
-
-                        // Image type property only
-                        if(element.type==="img"){ 
-                            storage.ref(item[element.attribute]).getDownloadURL().then((url) => {
-                                let stateItem = this.state.item;
-                                stateItem[element.attribute].url = url;
-                                this.setState({'item':stateItem});
-                            })
-                        }
-
-                    }
-                })
-
-                //Loader.enablePage();
-            });
-
-            this.props.dispatch(startPageLoad());
+            this.props.startPageLoad();
             this.props
-            .dispatch(getItem({settings:this.props.settings}))
+            .getItem({settings:this.props.settings})
+            .catch((e) => {
+                this.props.addErrorMessage(e.message);
+            })  
             .then(() => {
-                this.props.dispatch(endPageLoad());
-            });                
+                this.props.endPageLoad();
+            })                                      
         }
         
     }
@@ -89,18 +31,23 @@ class Form extends Component {
         event.preventDefault();
         if(this.validate())
         {
-            //Add game to FireBase DateBase
-            let firebaseDB = new FirebaseDB(this.props.item, this.props.settings);
-            this.props.dispatch(addItem({ref:this.props.settings.ref, item:this.props.item}));
-
-            // firebaseDB.save().then(()=>{
-            //     //If saved then show success message else error message
-            //     if(firebaseDB.saved()) {
-            //         this.props.dispatch(Messages.addSuccessMessage(this.props.settings.successMsg||"Success"));
-            //     } else {
-            //         this.props.dispatch(Messages.addErrorMessage(firebaseDB.getErrors()));
-            //     }                
-            // });
+            if(this.props.settings.action=='update') {
+                this.props.updateItem({ref:this.props.settings.ref, item:this.props.item, id:this.props.settings.id})
+                .then(() => {
+                    this.props.addSuccessMessage(this.props.settings.successMsg||"Success");
+                })
+                .catch((e) => {
+                    this.props.addErrorMessage(e.message);
+                })
+            } else {
+                this.props.addItem({ref:this.props.settings.ref, item:this.props.item})
+                .then(() => {
+                    this.props.addSuccessMessage(this.props.settings.successMsg||"Success");
+                })  
+                .catch((e) => {
+                    this.props.addErrorMessage(e.message);
+                })                              
+            }
         }
     }
 
@@ -110,23 +57,18 @@ class Form extends Component {
         if(validator.validate()) {
             return true;
         } else {
-            this.props.dispatch(Messages.addErrorMessage(validator.getMessage()));
+            this.props.addErrorMessage(validator.getMessage());
             return false;
         }
     }
 
     //Input change handler
     handleChange = (data) => {
-        this.props.dispatch(changeItem(data));
-        // let item = this.state.item;
-        // item[data.attribute] = data;
-        // this.setState({
-        //     item: item
-        // });
+        this.props.changeItem(data);
     }
 
     componentWillUnmount () {
-       this.props.dispatch(clearItem()); 
+       this.props.clearItem(); 
     }
 
     render() {
@@ -134,11 +76,13 @@ class Form extends Component {
                 let value = element.value || '';
                 let item = {...element, value:value, ...this.props.item[element.attribute]};
                 switch(element.type) {
+                    case 'fireimg':
                     case 'img':
                         return <ImageInput onChange={this.handleChange} key={element.attribute} element={item}/>
                         break;
                     case 'string':
                         return <TextInput onChange={this.handleChange} key={element.attribute} element={item}/>
+                        break;
                     default:
                         return <TextInput onChange={this.handleChange} key={element.attribute} element={item}/>
                 }
@@ -151,17 +95,32 @@ class Form extends Component {
                     <div className="mb-5">
                         {body}
                     </div>
-                    <SubmitBtn disabled={this.state.disabled}/>
+                    <SubmitBtn {...this.props}/>
                 </form>
             </div>
         );
     }
 }
 
-function mapStateToProps (state) {
+const mapStateToProps = (state) => {
     return {
-        item: state.items.item
+        item: state.item.item,
+        saving: state.item.saving
     }
 }
 
-export default connect(mapStateToProps)(Form);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        startPageLoad: () => {dispatch(startPageLoad())},
+        endPageLoad: () => {dispatch(endPageLoad())},
+        getItem: ({settings}) => {return dispatch(getItem({settings:settings}))},
+        updateItem: ({ref, item, id}) => {return dispatch(updateItem({ref:ref, item:item, id:id}))},
+        addItem: ({ref, item}) => {return dispatch(addItem({ref:ref, item:item}))},
+        changeItem: (data) => {dispatch(changeItem(data))},
+        clearItem: () => {dispatch(clearItem())},
+        addErrorMessage: (message) => {dispatch(Messages.addErrorMessage(message))},
+        addSuccessMessage: (message) => {dispatch(Messages.addSuccessMessage(message))},
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Form);

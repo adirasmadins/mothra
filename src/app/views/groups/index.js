@@ -6,8 +6,15 @@ import {Link} from 'react-router-dom';
 class Groups extends Component {
     render() {
         const settings = {
-            ref: 'groups',
+            ref: 'grouptest',
+            type: 'firebase',
+            order:{attr:'createdAt',order:'DESC'},
             properties:[
+                {
+                    attribute:"counter",
+                    name:"Counter",
+                    type:"counter"
+                },            
                 {
                     attribute:"id",
                     name:"ID",
@@ -16,7 +23,8 @@ class Groups extends Component {
                 {
                     attribute:"name",
                     name:"Name",
-                    type:"string"
+                    type:"string",
+                    order:true
                 },
                 {
                     attribute:"description",
@@ -26,22 +34,24 @@ class Groups extends Component {
                 {
                     attribute:"createdAt",
                     name:"Created at",
-                    type:"date"
+                    type:"date",
+                    order:true
                 }, 
                 {
                     attribute:"updatedAt",
                     name:"Updated at",
-                    type:"date"
+                    type:"date",
+                    order:true
                 },                  
                 {
                     attribute:"sigil",
                     name:"Sigil",                   
-                    type:"fireimg",
+                    type:"img",
                 },                            
                 {
                     attribute:"logo",
                     name:"Logo",
-                    type:"fireimg"
+                    type:"img"
                 },
                 {
                     attribute:"table_action",

@@ -5,7 +5,7 @@ import Form from '../../../components/page/form';
 class Add extends Component {
     render() {
         const settings = {
-            ref:"groups",
+            ref:"grouptest",
             action:"create",
             successMsg:"New group is saved",
             properties:[
@@ -29,14 +29,14 @@ class Add extends Component {
                 {
                     attribute:"sigil",
                     name:"Sigil",                   
-                    type:"img",
+                    type:"fireimg",
                     path:"games"
                 },                                     
                 {
                     attribute:"logo",
                     name:"Logo",                   
                     required:true,
-                    type:"img",
+                    type:"fireimg",
                     path:"games"
                 }             
             ]

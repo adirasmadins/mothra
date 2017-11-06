@@ -4,16 +4,12 @@ const initialState = {
 }
 export default function reducer(state = initialState, action){
 	switch (action.type) {
-		case ActionTypes.startPageLoad:{
-			state = [...state];			
-			state.loading = true;		
-			return state;
+		case ActionTypes.startPageLoad:{	
+			return {loading:true};
 			break;			
 		}
 		case ActionTypes.endPageLoad: {
-			state = [...state];
-			state.loading = false;
-			return state;
+			return {loading:false};
 			break;			
 		}		
 	}

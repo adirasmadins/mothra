@@ -1,38 +1,32 @@
 import React, { Component } from 'react';
 import Line from './line';
-import moment from 'moment';
-import Loader from '../loader';
-import {db} from '../../../config/firebase';
+import { connect } from 'react-redux';
+import { getItem, clearItem, changeItem } from '../../../actions/items';
+import * as Messages from '../../../actions/messages';
+import { startPageLoad, endPageLoad } from '../../../actions/page-actions';
+
 class DetailView extends Component {
-    constructor(props) {
-        super(props);
-        this.state ={
-            item:{}
-        };
-    }
 
     componentWillMount () {
-        db.ref(this.props.settings.ref).child(this.props.settings.id)
-        .once("value",(snap)=>{
-            let item = snap.val();
+        this.props.startPageLoad();
+        this.props
+        .getItem({settings:this.props.settings})
+        .catch((e) => {
+            this.props.addErrorMessage(e.message);
+        })  
+        .then(() => {
+            this.props.endPageLoad();
+        }) 
+    }
 
-            var elementToView = {};
-            this.props.settings.properties.map((element)=>{
-                elementToView[element.attribute] = item[element.attribute];
-            })
-
-            this.setState({
-                item: elementToView
-            });
-
-        }).then(()=>{
-            Loader.enablePage();
-        })
+    componentWillUnmount () {
+       this.props.clearItem(); 
     }
 
     render() {
         const body = this.props.settings.properties.map((line) =>{
-                return <Line key={line.attribute} settings={line} value={this.state.item[line.attribute]} />
+                let value = this.props.item[line.attribute]?this.props.item[line.attribute].value:'';
+                return <Line key={line.attribute} settings={line} value={value} />
             }
         )
 
@@ -46,4 +40,21 @@ class DetailView extends Component {
     }
 }
 
-export default DetailView;
+const mapStateToProps = (state) => {
+    return {
+        item: state.item.item
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        startPageLoad: () => {dispatch(startPageLoad())},
+        endPageLoad: () => {dispatch(endPageLoad())},
+        getItem: ({settings}) => {return dispatch(getItem({settings:settings}))},
+        clearItem: () => {dispatch(clearItem())},
+        addErrorMessage: (message) => {dispatch(Messages.addErrorMessage(message))},
+        addSuccessMessage: (message) => {dispatch(Messages.addSuccessMessage(message))},
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(DetailView);

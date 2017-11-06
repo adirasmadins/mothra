@@ -9,15 +9,7 @@ class ImageInput extends Component {
         // Only image types
         var imageType = /^image\//;
         if (imageType.test(file.type)) {            
-            this.props.onChange({
-                type:'img',
-                url:file.preview,
-                value:file.preview,
-                file:file,
-                name:this.props.element.name,
-                attribute:this.props.element.attribute
-                //settings:this.props.element.settings
-            });
+            this.props.onChange({...this.props.element, value:file.preview, file:file});
         }
     }
     
@@ -41,9 +33,9 @@ class ImageInput extends Component {
 
         // Show preview image.
         let img = null;
-        if(this.props.element.url)
+        if(this.props.element.value)
         {
-            img = <img alt="" src={this.props.element.url} className="img-thumbnail img-thumbnail-upload"/>
+            img = <img alt="" src={this.props.element.value} className="img-thumbnail img-thumbnail-upload"/>
         }
 
         return (

@@ -5,7 +5,7 @@ import Form from '../../../components/page/form';
 class Add extends Component {
     render() {
         const settings = {
-            ref:"groups",
+            ref:"grouptest",
             id:this.props.match.params.id,
             action:"update",
             successMsg:"Group is updated",
@@ -30,14 +30,14 @@ class Add extends Component {
                 {
                     attribute:"sigil",
                     name:"Sigil",                   
-                    type:"img",
+                    type:"fireimg",
                     path:"games"
                 },                                     
                 {
                     attribute:"logo",
                     name:"Logo",                   
                     required:true,
-                    type:"img",
+                    type:"fireimg",
                     path:"games"
                 }             
             ]

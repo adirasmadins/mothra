@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StringLine from './string-line';
 import DateLine from './date-line';
-import FireImgLine from './fire-img-line';
+import ImageLine from './image-line';
 class Line extends Component {
     render() {
         var value = '';
@@ -9,9 +9,10 @@ class Line extends Component {
                     case 'date':
                         value = <DateLine value={this.props.value} />
                         break;
+                    case 'img':    
                     case 'fireimg':
                         if(this.props.value!==undefined&&this.props.value!=='')
-                            value = <FireImgLine value={this.props.value} />
+                            value = <ImageLine value={this.props.value} />
                         break;
                     case 'string':
                         value = <StringLine value={this.props.value} />

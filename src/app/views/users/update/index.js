@@ -5,7 +5,8 @@ import Form from '../../../components/page/form';
 class Add extends Component {
     render() {
         const settings = {
-            ref:"users/"+this.props.match.params.id,
+            ref:"users",
+            id:this.props.match.params.id,
             action:"update",
             successMsg:"User is updated",
             properties:[
@@ -31,7 +32,7 @@ class Add extends Component {
                     attribute:"avatar",
                     name:"Avatar",
                     required:true,
-                    type:"img",
+                    type:"fireimg",
                     path:"games"
                 }                                                      
             ]

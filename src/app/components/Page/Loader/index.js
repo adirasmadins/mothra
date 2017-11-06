@@ -1,15 +1,5 @@
 import React, { Component } from 'react';
 class Loader extends Component {
-    static disablePage(){
-        var pageLoader = document.querySelector('#pageLoader');
-        pageLoader.className += " active";
-    }
-
-    static enablePage(){
-        var pageLoader = document.querySelector('#pageLoader');
-        pageLoader.classList.remove("active");
-    }
-
     render() {
         var loader = "";
         if(this.props.loader!==false) {

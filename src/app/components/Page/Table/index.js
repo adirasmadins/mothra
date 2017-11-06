@@ -3,56 +3,83 @@ import Header from './header';
 import Row from './row';
 import Loader from '../loader';
 import PageCounter from './page-counter';
+import Button from './button';
 import { connect } from 'react-redux';
-import { getList, clearItemsList } from '../../../actions';
+import { getList, clearItemsList, removeItemFromList, setOrder, clearOrder } from '../../../actions/items';
 import { startPageLoad, endPageLoad } from '../../../actions/page-actions';
+import * as Messages from '../../../actions/messages';
 
 class Table extends Component {  
     componentWillMount () {
-        this.props.dispatch(startPageLoad());
-        this.props
-        .dispatch(getList({ref:this.props.settings.ref}))
-        .then(() => {
-            this.props.dispatch(endPageLoad());
-        });
+        this.props.startPageLoad();
+        if (this.props.settings.order) {
+            this.props
+            .setOrder(this.props.settings.order.attr, this.props.settings.order.order)
+            .then(() => {
+                this.props.endPageLoad();
+            });
+        } else {
+            this.props
+            .getList()
+            .then(() => {
+                this.props.endPageLoad();
+            });            
+        }
     }
 
     emmiterHandler = () => {
-        this.props.dispatch(getList({ref:this.props.settings.ref}));       
+        this.props.getList({order:this.props.order, add:true, last:this.props.last});       
     }
 
     componentWillUnmount () {
-       this.props.dispatch(clearItemsList()); 
+       this.props.clearItemsList(); 
     }
 
     render() {
         const tablfeInfo = this.props.list.map((item, index) =>{
-                return <Row key={index} settings={this.props.settings} item={item}/>
+                return <Row {...this.props} key={index} index = {index} settings={this.props.settings} item={item}/>
             }
         )
         return (
             <div>
-                <div className="d-flex">
+{/*                <div className="d-flex">
                     <PageCounter settings={this.props.settings}/>
-                </div>          
+                </div> */}         
                 <table className="table">               
-                    <Header settings={this.props.settings}/>
+                    <Header {...this.props} settings={this.props.settings}/>
                     <tbody>
                         {tablfeInfo}
                     </tbody>
                 </table>
                 <div className="d-flex justify-content-center">
-                    <button onClick={this.emmiterHandler} className="btn btn-primary btn-lg mb-5 mt-3">Next Page</button>
+                    {this.props.last===false?'':<Button {...this.props} className="btn btn-primary btn-lg mb-5 mt-3"></Button>}
                 </div>
             </div>
         );
     }
 }
 
-function mapStateToProps (state) {
+const mapStateToProps = (state) => {
     return {
-        list: state.items.list
+        list: state.items.list,
+        fetching: state.items.fetching,
+        last: state.items.last,
+        order: state.itemsOrder
     }
 }
 
-export default connect(mapStateToProps)(Table);
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        startPageLoad: () => {dispatch(startPageLoad())},
+        endPageLoad: () => {dispatch(endPageLoad())},
+        getList: ({order, filter, add, last}) => {return dispatch(getList({last:last, add:add,ref:ownProps.settings.ref, type:ownProps.settings.type, order:order, filter:filter}))},
+        removeItemFromList: ({id,index}) => {return dispatch(removeItemFromList({ref:ownProps.settings.ref, type:ownProps.settings.type, id:id, index:index}))},
+        clearItemsList: () => {return dispatch(clearItemsList())},
+        addErrorMessage: (message) => {dispatch(Messages.addErrorMessage(message))},
+        addSuccessMessage: (message) => {dispatch(Messages.addSuccessMessage(message))},
+        setOrder: (attr, order) => {return dispatch(setOrder({attr:attr, order:order, ref:ownProps.settings.ref, type:ownProps.settings.type}))},
+        clearOrder: () => {dispatch(clearOrder())},
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Table);
