@@ -4,41 +4,28 @@ import Table from '../../components/page/table';
 import {Link} from 'react-router-dom';
 
 class Users extends Component {
-
     render() {
         const settings = {
-            ref: 'users',
+            ref: 'grouptest',
+            type: 'rest',
+            order:{attr:'createdAt',order:'DESC'},
             properties:[
+                {
+                    attribute:"counter",
+                    name:"Counter",
+                    type:"counter"
+                },            
                 {
                     attribute:"name",
                     name:"Name",
-                    type:"string"
-                },        
-                {
-                    attribute:"nickname",
-                    name:"Nickname",
-                    type:"string"
-                },    
-                {
-                    attribute:"createdAt",
-                    name:"Created at",
-                    type:"date"
-                },  
-                {
-                    attribute:"updatedAt",
-                    name:"Updated at",
-                    type:"date"
-                },                                
-                {
-                    attribute:"avatar",
-                    name:"Avatar",
-                    type:"fireimg"
-                },                                            
+                    type:"string",
+                    order:true
+                },
                 {
                     attribute:"table_action",
                     name:"",
                     type:"action",
-                    location:"users"
+                    location:"groups"
                 }
             ]
         }
@@ -47,7 +34,7 @@ class Users extends Component {
             <Page>
                 <h1 className="display-3">Users</h1>
                 <p className="lead text-muted">Users list</p>
-                <Link to={"/users/add"} className="btn btn-primary mb-4">Add user</Link>
+                <Link to={"/groups/add"} className="btn btn-primary mb-4">Add User</Link>
                 <Table settings={settings}/>
             </Page>
         );

@@ -1,12 +1,16 @@
 import * as ActionTypes from './action-types';
 import {db,storage} from '../config/firebase';
 import FirebaseService from '../services/firebase';
+import RestService from '../services/rest';
 
 function getProvider(type) {
     switch(type) {
         case 'firebase':{
             return new FirebaseService();
             break;
+        }
+        case 'rest':{
+            return new RestService();
         }
     }
 }
@@ -50,7 +54,6 @@ export function getList({type = 'firebase', ref = '', order, filter, limit, last
 	return (dispatch) => {
         dispatch({type:ActionTypes.startFetching}); 
         return provider.getList({ref:ref, order:order, filter:filter, limit:limit, last:last}).then((result) => {
-
             if(add) {
                 dispatch({type:ActionTypes.getItemsList, payload:{list:result.list, last:result.last}});
             } else {
